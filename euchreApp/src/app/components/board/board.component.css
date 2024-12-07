@@ -1,0 +1,91 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+body {
+  background-color: #e0f7fa;
+  /* Light blue background for the game room feel */
+  font-family: Arial, sans-serif;
+}
+
+.game-table {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  padding: 20px;
+  justify-items: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+  /* Add position relative to place the center card area */
+}
+
+.table-center {
+  position: absolute;
+  /* Position in the middle of the grid */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  /* Set a specific width for the center area */
+  height: 100px;
+  /* Set a specific height for the center area */
+  background-color: rgba(255, 255, 255, 0.8);
+  /* A light background to represent the card space */
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.player-space {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  width: 180px;
+  height: 250px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-image: linear-gradient(to bottom right, #f0f0f0, #fafafa);
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.card {
+  max-height: 100px;
+  max-width: 60px;
+  margin: 5px;
+  border-radius: 5px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.1);
+}
+
+/* Position players around the table */
+#player-1 {
+  grid-area: 1 / 1;
+}
+
+#player-2 {
+  grid-area: 1 / 2;
+}
+
+#player-3 {
+  grid-area: 2 / 1;
+}
+
+#player-4 {
+  grid-area: 2 / 2;
+}
