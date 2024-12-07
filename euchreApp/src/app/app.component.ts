@@ -4,6 +4,7 @@ import { GameComponent } from "./components/game/game.component";
 import { FormsModule, NgModel } from '@angular/forms';
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [RouterOutlet, GameComponent, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
