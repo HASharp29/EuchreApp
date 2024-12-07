@@ -49,7 +49,7 @@ export class GameService {
 
   constructor() { }
 
-  // Create a deck of cards
+  // Create a deck of cards, initializes all of the cards
   createDeck(): Card[] {
     const suits: Card["suit"][] = ["hearts", "diamonds", "clubs", "spades"];
     const ranks: Card["rank"][] = ["9", "10", "J", "Q", "K", "A"];
@@ -63,7 +63,7 @@ export class GameService {
     return deck;
   }
 
-  // Shuffle the deck
+  // creates deck and then shuffles the deck
   shuffleDeck(deck: Card[]): Card[] {
     for (let i = deck.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -72,7 +72,7 @@ export class GameService {
     return deck;
   }
 
-  //create the hands and designate kitty card
+  //create the hands of 5 cards each and designates kitty card
   private dealCards() {
     const deck = this.shuffleDeck(this.createDeck());
 
