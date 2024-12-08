@@ -1,6 +1,21 @@
-<p>Congrats! You routed to the board! D.B. is pleased with your routing work!</p>
-<img src="https://media.tenor.com/wQZdn6U1RoQAAAAM/dance-happy.gif" alt="The dancing baby GIF">
-@for(player of this.players; track player.index) {
-<p>{{ this.players[player.index].name }}</p>
-}
-<h1>The current player is {{ this.currentPlayer.name }}</h1>
+<div class="game-table">
+  <div class="table-center"></div>
+  @for(player of this.players; track player.index) {
+  <div class="player-space" id="player-{{player.index}}">
+    <p>Player {{player.index + 1 }}: {{ this.players[player.index].name }}</p>
+    <img src="https://media.tenor.com/wQZdn6U1RoQAAAAM/dance-happy.gif" alt="The dancing baby GIF">
+    <div class="cards">
+      @if(player === this.currentPlayer) {
+      @for(card of round.hands[player.index]; track card.photo){
+      <img src="photos/deck/{{ card.photo }}" alt="Something went wrong" class="card">
+      }
+      }
+      @else {
+      @for(card of round.hands[player.index]; track card.photo) {
+      <img src="photos/deck/back_dark.png" alt="something went wrong" class="card">
+      }
+      }
+    </div>
+  </div>
+  }
+</div>

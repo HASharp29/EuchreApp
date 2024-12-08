@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { GameService, Game } from '../../services/game.service';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { StorageService
+import { StorageService} from '../../services/storage.service';
 
- } from '../../services/storage.service';
+
 @Component({
   selector: 'app-game',
   standalone: true,
@@ -18,7 +18,7 @@ export class GameComponent {
 
   constructor(
     private gameService: GameService, 
-    // private storageService: StorageService,
+    private storageService: StorageService,
     private router: Router,
   ) { }
 
@@ -27,13 +27,15 @@ export class GameComponent {
     this.game = this.gameService.initializeGame(playerNames);
     console.log('Game initialized:', this.game);
     
-    // if (this.game && false) {
-    //   // Save the game to Firestore
-    //   await this.storageService.saveNewGame(this.game!);
-    // }
+    if (this.game && true) {
+      // Save the game to Firestore
+      await this.storageService.saveGame(this.game!);
+      // const tempGame: Game | null = await this.storageService.getGame('U8lCnEkdAl8sq0WBiVza');      
+      // console.log(tempGame);
+    }
 
     // Navigate to the board after initializing the game
-    // this.router.navigate(['/board']);
+    this.router.navigate(['/board']);
   }
 }
 

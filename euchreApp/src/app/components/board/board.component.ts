@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { GameService, Game } from '../../services/game.service';
+import { GameService, Game, Round } from '../../services/game.service';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -14,5 +14,6 @@ export class BoardComponent {
   game: Game = this.gameService.initializeGame(["John Calvin", "Dancing Baby", "Norman", "Rickroll Astley"]);
   players = this.gameService.initializeGame(["John Calvin", "Dancing Baby", "Norman", "Rickroll Astley"]).players;
   currentPlayer = this.players[0];
-  cards = 0;
+  cards = this.gameService.createDeck();
+  round: Round = this.gameService.createRound(this.currentPlayer);
 }
