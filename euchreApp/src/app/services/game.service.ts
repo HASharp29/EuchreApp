@@ -9,7 +9,7 @@ export interface Card {
 }
 
 //stores a Player name and index
-interface Player {
+export interface Player {
   name: string;
   index: number;
 }
@@ -228,7 +228,7 @@ export class GameService {
         throw new Error("Player must follow the suit led")
       }
     } else {
-      throw new Error("Card to play not found in player\"s hand.");
+      throw new Error("Card to play not found in player\'s hand.");
     }
 
     // Add the card to the current trick, remove from hand

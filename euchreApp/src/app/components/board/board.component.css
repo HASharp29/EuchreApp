@@ -6,9 +6,7 @@
 }
 
 body {
-  background-color: #e0f7fa;
-  /* Light blue background for the game room feel */
-  font-family: Arial, sans-serif;
+  display: flex;
 }
 
 .game-table {
@@ -21,20 +19,20 @@ body {
   align-items: center;
   height: 100vh;
   position: relative;
-  /* Add position relative to place the center card area */
+  float: left;
 }
 
 .table-center {
   position: absolute;
   /* Position in the middle of the grid */
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100px;
+  width: 20%;
   /* Set a specific width for the center area */
-  height: 100px;
+  height: 20%;
   /* Set a specific height for the center area */
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: skyblue;
   /* A light background to represent the card space */
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -45,32 +43,41 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 15px;
-  width: 180px;
-  height: 250px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-image: linear-gradient(to bottom right, #f0f0f0, #fafafa);
+  max-width: 40em;
+  max-height: 20em;
+  margin: 2em;
 }
 
 .cards {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
+}
+
+.current-player-card {
+  max-height: 8em;
+  max-width: 4em;
+  margin: 1em;
+  border-radius: 5px;
+  border: 1px solid;
+  transition: box-shadow 0.3s ease;
 }
 
 .card {
-  max-height: 100px;
-  max-width: 60px;
-  margin: 5px;
+  max-height: 8em;
+  max-width: 4em;
+  margin: 1em;
   border-radius: 5px;
-  transition: transform 0.3s ease-in-out;
 }
 
-.card:hover {
-  transform: scale(1.1);
+.current-player-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  ;
+}
+
+.player-image {
+  max-height: 8em;
+  max-width: 12em;
 }
 
 /* Position players around the table */
@@ -88,4 +95,20 @@ body {
 
 #player-4 {
   grid-area: 2 / 2;
+}
+
+.game-stats {
+  float: right;
+  display: block;
+  border: 1px solid;
+  border-radius: 10px;
+  background-color: skyblue;
+  margin: 1em;
+  width: 25%;
+  height: 100%;
+  position: relative;
+}
+
+.game-stats * {
+  padding: 1em;
 }
