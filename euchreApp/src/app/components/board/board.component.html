@@ -1,8 +1,8 @@
 <div class="game-table">
   <div class="table-center">
-    @if(cardsPlayedThisRound) {
-    @for(card of cardsPlayedThisRound; track card.photo) {
-    <img src="photos/deck/{{ card.photo }}">
+    @if(trick.cardsPlayed) {
+    @for(card of this.cardsPlayed; track card.photo) {
+    <img src="photos/deck/{{ card.photo }}" alt="help" class="card">
     }
     }
   </div>
@@ -12,9 +12,9 @@
     <img src="https://media.tenor.com/wQZdn6U1RoQAAAAM/dance-happy.gif" alt="The dancing baby GIF" class="player-image">
     <div class="cards">
       @if(player === this.currentPlayer) {
-      @for(card of round.hands[player.index]; track card.photo){
+      @for(card of game.currentRound.hands[player.index]; track card.photo){
       <img src="photos/deck/{{ card.photo }}" alt="Something went wrong" class="current-player-card"
-        (click)="playCard(card)">
+        (click)="!playerHasPlayed && playCard(card)">
       }
       }
       @else {
@@ -34,3 +34,5 @@
   <p>{{ this.currentPlayer.name }} is the dealer</p>
   <p>Rick Astley called trump</p>
 </div>
+<button class="temporary-change-player-button" (click)="changePlayer()">Change Player</button>
+<button class="temporary-calculate-score" (click)="played === 4 && calculateScore()">Calculate Score</button>
