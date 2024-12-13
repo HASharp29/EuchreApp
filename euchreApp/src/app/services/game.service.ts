@@ -19,6 +19,7 @@ export interface Trick {
   cardsPlayed: [Card | null, Card | null, Card | null, Card | null]; //cards played, index corresponds to player
   leadPlayer: Player | null; //player who played first card
   cardLed: Card | null; //card led
+  currentPlayer: Player | null;
 }
 
 // this interfaces keeps track of one round. it also contains the current trick
@@ -90,18 +91,21 @@ export class GameService {
   }
 
   // creates a new trick with all values initialized to null
-  createTrick() {
+  createTrick(leadPlayer: Player) {
     return {
       cardsPlayed: [null, null, null, null] as [Card | null, Card | null, Card | null, Card | null],
-      leadPlayer: null,
+      leadPlayer: leadPlayer,
       cardLed: null,
+      currentPlayer: leadPlayer,
     };
   }
 
   // creates new round, deal cards to players
-  createRound(dealer: Player): Round {
+  createRound(players: Player[], dealer: Player): Round {
     // distribute cards to hand and kitty
     const { hands, kittyCard } = this.dealCards();
+
+    const currentTrick = this.createTrick(players[(dealer.index + 1) % 4]);
 
     return {
       hands,
@@ -111,7 +115,7 @@ export class GameService {
       outPlayer: null,
       trumpSuit: null,
       trickCounter: 0,
-      currentTrick: this.createTrick(),
+      currentTrick,
       tricksWon: [0, 0],
     };
   }
@@ -131,7 +135,7 @@ export class GameService {
     return {
       players,
       roundCounter: 0,
-      currentRound: this.createRound(players[0]),
+      currentRound: this.createRound(players, players[0]),
       score: [0, 0],
     };
   }
@@ -228,11 +232,12 @@ export class GameService {
         throw new Error("Player must follow the suit led")
       }
     } else {
-      throw new Error("Card to play not found in player\"s hand.");
+      throw new Error("Card to play not found in player\'s hand.");
     }
 
     // Add the card to the current trick, remove from hand
     trick.cardsPlayed[player.index] = cardToPlay;
+    trick.currentPlayer = game.players[(player.index + 1) % 4]
     playerHand.splice(cardToPlayIndex, 1);
   }
 
@@ -285,7 +290,8 @@ export class GameService {
     console.log(`Team 2 Tricks: ${round.tricksWon[1]}`);
 
     //reset trick
-    round.currentTrick = this.createTrick();
+    round.currentTrick = this.createTrick(players[winningPlayerIndex]);
+
     round.trickCounter++;
   }
 
@@ -321,7 +327,7 @@ export class GameService {
     }
 
     //reset round, moving to next dealer
-    game.currentRound = this.createRound(game.players[(round.dealer.index + 1) % 4]);
+    game.currentRound = this.createRound(game.players, game.players[(round.dealer.index + 1) % 4]);
     game.roundCounter++;
   }
 
