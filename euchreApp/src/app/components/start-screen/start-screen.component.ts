@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { GameService, Game } from '../../services/game.service';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
 
@@ -10,11 +10,18 @@ import { StorageService } from '../../services/storage.service';
   standalone: true,
   templateUrl: './start-screen.component.html',
   styleUrls: ['./start-screen.component.css'],
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, ReactiveFormsModule],
 })
 export class StartScreenComponent {
   game: Game | null = null;
-  playerNames: string[] = ['', '', '', '']; // Array to bind to input fields
+  
+  fb = inject(FormBuilder);
+  playerForm = this.fb.group({
+    player0: ["", Validators.required],
+    player1: ["", Validators.required],
+    player2: ["", Validators.required],
+    player3: ["", Validators.required],
+  })
 
   constructor(
     private gameService: GameService,
@@ -22,7 +29,15 @@ export class StartScreenComponent {
     private router: Router,
   ) { }
 
-  async startGame(playerNames: string[]) {
+  async startGame() {
+
+    // Extract player names from the form
+    const playerNames: string[] = [
+    this.playerForm.get('player0')?.value || '',
+    this.playerForm.get('player1')?.value || '',
+    this.playerForm.get('player2')?.value || '',
+    this.playerForm.get('player3')?.value || '',
+  ];
 
     console.log("submitted");
     this.game = this.gameService.initializeGame(playerNames);
