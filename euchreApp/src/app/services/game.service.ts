@@ -113,7 +113,7 @@ export class GameService {
       dealer, //input of function
       caller: null,
       outPlayer: null,
-      trumpSuit: null,
+      trumpSuit: "hearts",
       trickCounter: 0,
       currentTrick,
       tricksWon: [0, 0],
@@ -132,12 +132,15 @@ export class GameService {
       index,
     })) as [Player, Player, Player, Player];
 
-    return {
+    const game: Game = {
       players,
       roundCounter: 0,
       currentRound: this.createRound(players, players[0]),
       score: [0, 0],
     };
+    
+    console.log(game);
+    return game;
   }
 
 
@@ -202,7 +205,7 @@ export class GameService {
     if (this.isTrumpSuit(card1, trumpSuit)) {
       return this.isTrumpSuit(card2, trumpSuit);
     }
-    return card1.suit === card2.suit && !this.isTrumpSuit(card2, trumpSuit);
+    return card1.suit === card2.suit;
   }
 
   //given a player, card, and the round, remove card from player hand
@@ -262,7 +265,7 @@ export class GameService {
         card && (  //make sure new card is not null
           highestCard === null ||  //if new card is first card
           (this.isTrumpSuit(card, trumpSuit) && !this.isTrumpSuit(highestCard, trumpSuit)) || //if new card is trump and highest is not
-          (this.areSameSuit(card, highestCard, trumpSuit) && this.getCardRank(card, trumpSuit) > this.getCardRank(highestCard, trumpSuit)) //if they are same suit, and new card is higher
+          (this.areSameSuit(card, highestCard, trumpSuit) && (this.getCardRank(card, trumpSuit) > this.getCardRank(highestCard, trumpSuit))) //if they are same suit, and new card is higher
         )) {
         highestCard = card;
         winningPlayerIndex = i;
