@@ -15,8 +15,6 @@ export class BoardComponent {
   storageService = inject(StorageService);
   game: Game = this.gameService.initializeGame(["John Calvin", "Dancing Baby", "Norman", "Rick Astley"]);
   currentPlayer: Player = this.game.players[0];
-  round: Round = this.gameService.createRound(this.game.players, this.game.players[0]);
-  trick: Trick = this.game.currentRound.currentTrick;
   playerHasPlayed: boolean = false;
 
   playCard(card: Card) {

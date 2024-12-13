@@ -1,24 +1,36 @@
 <div class="game-table">
+
   <div class="table-center">
-    @if(game?.currentRound?.currentTrick?.cardsPlayed) {
-    @for(card of game.currentRound.currentTrick.cardsPlayed; track card.photo) {
-    <img src="photos/deck/{{ card.photo }}" alt="help" class="card">
-    }
-    }
+    @if(game.currentRound.currentTrick.cardsPlayed && game.currentRound.currentTrick.cardsPlayed.length >= 4) {
+      @if(game.currentRound.currentTrick.cardsPlayed[0]) {
+        <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[0].photo }}" alt="help" class="card">
+      }
+      @if(game.currentRound.currentTrick.cardsPlayed[1]) {
+        <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[1].photo }}" alt="help" class="card">
+      }
+      @if(game.currentRound.currentTrick.cardsPlayed[2]) {
+        <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[2].photo }}" alt="help" class="card">
+      }
+      @if(game.currentRound.currentTrick.cardsPlayed[3]) {
+        <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[3].photo }}" alt="help" class="card">
+      }
+    } 
+    
   </div>
-  @for(player of this.players; track player.index) {
+
+  @for(player of game.players; track player.index) {
   <div class="player-space" id="player-{{player.index}}">
-    <p>Player {{player.index + 1 }}: {{ this.players[player.index].name }}</p>
+    <p>Player {{player.index + 1 }}: {{ game.players[player.index].name }}</p>
     <img src="https://media.tenor.com/wQZdn6U1RoQAAAAM/dance-happy.gif" alt="The dancing baby GIF" class="player-image">
     <div class="cards">
       @if(player === this.currentPlayer) {
-      @for(card of game.currentRound.currentTrick.hands[player.index]; track card.photo){
+      @for(card of game.currentRound.hands[player.index]; track card!.photo){
       <img src="photos/deck/{{ card.photo }}" alt="Something went wrong" class="current-player-card"
         (click)="!playerHasPlayed && playCard(card)">
       }
       }
       @else {
-      @for(card of game.currentRound.currentTrick.hands[player.index]; track card.photo) {
+      @for(card of game.currentRound.hands[player.index]; track card.photo) {
       <img src="photos/deck/{{ card.photo }}" alt="something went wrong" class="card">
       }
       }
@@ -30,9 +42,10 @@
   <h2>Game Stats</h2>
   <p>Team 1 Score: 0</p>
   <p>Team 2 Score: 0</p>
-  <p>[Suit] is trump</p>
+  <p>{{this.game.currentRound.trumpSuit}} is trump</p>
   <p>{{ this.currentPlayer.name }} is the dealer</p>
   <p>Rick Astley called trump</p>
 </div>
 <button class="temporary-change-player-button" (click)="changePlayer()">Change Player</button>
-<button class="temporary-calculate-score" (click)="played === 4 && calculateScore()">Calculate Score</button>
+<button class="temporary-calculate-score" (click)="currentPlayer === game.players[3] && calculateScore()">Calculate
+  Score</button>

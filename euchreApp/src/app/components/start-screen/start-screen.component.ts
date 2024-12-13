@@ -8,11 +8,11 @@ import { StorageService } from '../../services/storage.service';
 @Component({
   selector: 'app-game',
   standalone: true,
-  templateUrl: './game.component.html',
-  styleUrls: ['./game.component.css'],
+  templateUrl: './start-screen.component.html',
+  styleUrls: ['./start-screen.component.css'],
   imports: [FormsModule, RouterLink],
 })
-export class GameComponent {
+export class StartScreenComponent {
   game: Game | null = null;
   playerNames: string[] = ['', '', '', '']; // Array to bind to input fields
 
@@ -23,13 +23,14 @@ export class GameComponent {
   ) { }
 
   async startGame(playerNames: string[]) {
+
     console.log("submitted");
     this.game = this.gameService.initializeGame(playerNames);
     console.log('Game initialized:', this.game);
 
     if (this.game && true) {
       // Save the game to Firestore
-      await this.storageService.saveGame(this.game!);
+      // await this.storageService.saveGame(this.game!);
       // const tempGame: Game | null = await this.storageService.getGame('U8lCnEkdAl8sq0WBiVza');
       // console.log(tempGame);
     }
@@ -38,6 +39,7 @@ export class GameComponent {
     this.router.navigate(['/board']);
   }
 }
+
 
 
 
