@@ -1,7 +1,7 @@
 <div class="game-table">
   <div class="table-center">
-    @if(trick.cardsPlayed) {
-    @for(card of this.cardsPlayed; track card.photo) {
+    @if(game?.currentRound?.currentTrick?.cardsPlayed) {
+    @for(card of game.currentRound.currentTrick.cardsPlayed; track card.photo) {
     <img src="photos/deck/{{ card.photo }}" alt="help" class="card">
     }
     }
@@ -12,13 +12,13 @@
     <img src="https://media.tenor.com/wQZdn6U1RoQAAAAM/dance-happy.gif" alt="The dancing baby GIF" class="player-image">
     <div class="cards">
       @if(player === this.currentPlayer) {
-      @for(card of game.currentRound.hands[player.index]; track card.photo){
+      @for(card of game.currentRound.currentTrick.hands[player.index]; track card.photo){
       <img src="photos/deck/{{ card.photo }}" alt="Something went wrong" class="current-player-card"
         (click)="!playerHasPlayed && playCard(card)">
       }
       }
       @else {
-      @for(card of round.hands[player.index]; track card.photo) {
+      @for(card of game.currentRound.currentTrick.hands[player.index]; track card.photo) {
       <img src="photos/deck/{{ card.photo }}" alt="something went wrong" class="card">
       }
       }
