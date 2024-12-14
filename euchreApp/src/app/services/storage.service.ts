@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 import { Game, Round, Trick, Card, Player } from './game.service';
 
 //the code in this section was largely written by chatgpt
-
+// here is the link to the firbase project:
+// https://console.firebase.google.com/u/0/project/lexemwellioeuchre/overview
 @Injectable({
   providedIn: 'root'
 })
