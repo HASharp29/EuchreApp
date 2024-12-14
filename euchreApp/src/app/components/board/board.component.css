@@ -17,6 +17,10 @@
   height: 100;
 } */
 
+.topbar {
+  display: flex;
+}
+
 .game-table {
   display: grid;
   grid-template-columns: 1fr 1fr;
