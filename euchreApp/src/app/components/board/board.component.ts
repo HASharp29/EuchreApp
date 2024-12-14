@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 export class BoardComponent {
   gameService = inject(GameService);
   activatedRoute = inject(ActivatedRoute);
-  game: Game = this.gameService.initializeGame(['','','','']);
+  game: Game = this.gameService.initializeGame(['','','','']); //game initialized with emptyh strings (will be reset later)
   currentPlayer: Player = this.game.players[0];
   playerHasPlayed: boolean = false;
 
@@ -26,7 +26,7 @@ export class BoardComponent {
 
       // Initialize the game with player names
       if (playerNames.length === 4) {
-        this.game = this.gameService.initializeGame(playerNames);
+        this.game = this.gameService.initializeGame(playerNames); // game reset with players
         this.currentPlayer = this.game.players[0]; // Set the first player as the current player
       } else {
         console.error("Invalid player names provided");
