@@ -185,6 +185,11 @@ export class StorageService {
             leadPlayer: null,
             cardLed: null,
           },
+          previousTrick: tricks[tricks.length - 1] || {
+            cardsPlayed: [null, null, null, null],
+            leadPlayer: null,
+            cardLed: null,
+          },
           tricksWon: roundData['tricksWon'],
         };
 

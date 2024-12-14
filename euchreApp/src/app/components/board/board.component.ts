@@ -15,6 +15,7 @@ export class BoardComponent {
   gameService = inject(GameService);
   activatedRoute = inject(ActivatedRoute);
   game: Game = this.gameService.initializeGame(['', '', '', '']); //game initialized with empty strings (will be reset later)
+  gameOver: boolean = false;
 
   constructor() {
     // Get player names from query parameters
@@ -44,15 +45,21 @@ export class BoardComponent {
     console.log(winner)
     this.gameService.scoreTrick(this.game, winner);
     alert(winner.name + " is the winner!");
+
+    if (this.game.currentRound.trickCounter === 5) {
+      this.scoreRound();
+    }
   }
 
   scoreRound() {
     const winningTeam = this.gameService.scoreRound(this.game);
     if (winningTeam === 0) {
-      alert("Team 1 wins");
+      this.gameOver = true;
+      alert("Game over. Team 1 wins");
     }
     else if (winningTeam === 1) {
-      alert("Team 2 wins");
+      this.gameOver = true;
+      alert("Game over. Team 2 wins");
     }
   }
 }

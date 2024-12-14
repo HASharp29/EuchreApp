@@ -46,15 +46,12 @@
   <h2>Game Stats</h2>
   <p>Team 1 Tricks Won: {{this.game.currentRound.tricksWon[0]}}</p>
   <p>Team 2 Tricks Won: {{this.game.currentRound.tricksWon[1]}}</p>
-  <p>Team 1 Rounds Won: {{this.game.score[0]}}</p>
-  <p>Team 2 Rounds Won: {{this.game.score[1]}}</p>
+  <p>Team 1 Score: {{this.game.score[0]}}</p>
+  <p>Team 2 Score: {{this.game.score[1]}}</p>
   <p>{{this.game.currentRound.trumpSuit}} is trump</p>
   <p>It is {{ this.game.currentRound.currentTrick.currentPlayer.name }}'s turn</p>
   <p>Rick Astley called trump</p>
 </div>
-<button class="temporary-button" (click)="calculateScore()"
-  [disabled]="game.currentRound.currentTrick.currentPlayer !== game.players[3]">Calculate
-  Score</button>
-<button class="temporary-button" (click)="this.game.currentRound.trickCounter === 5 && scoreRound()"
-  [disabled]="this.game.currentRound.trickCounter !== 5">Score
-  Round</button>
+@if(gameOver === true) {
+<button class="temporary-button" [routerLink]="['/']">Play Again</button>
+}
