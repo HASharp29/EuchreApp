@@ -138,7 +138,7 @@ export class GameService {
       currentRound: this.createRound(players, players[0]),
       score: [0, 0],
     };
-    
+
     console.log(game);
     return game;
   }
@@ -232,6 +232,7 @@ export class GameService {
         !this.areSameSuit(cardToPlay, cardLed, trumpSuit) &&
         (playerHand.find((card) => this.areSameSuit(card, cardLed, trumpSuit)))
       ) {
+        alert("You can't play that! Your card must follow the suit led!")
         throw new Error("Player must follow the suit led")
       }
     } else {

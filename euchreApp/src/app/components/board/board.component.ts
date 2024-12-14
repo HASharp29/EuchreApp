@@ -48,6 +48,14 @@ export class BoardComponent {
 
   calculateScore() {
     const winner = this.gameService.determineTrickWinner(this.game);
+    console.log(winner)
     alert(winner.name + " is the winner!");
+    this.gameService.scoreTrick(this.game, winner);
+    this.currentPlayer = this.game.players[0];
+    this.playerHasPlayed = false;
+  }
+
+  scoreRound() {
+    this.gameService.scoreRound(this.game);
   }
 }
