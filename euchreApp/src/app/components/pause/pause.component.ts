@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { Game } from '../../services/game.service';
 
 @Component({
   selector: 'app-pause',
@@ -8,32 +9,49 @@ import { Router, RouterModule } from '@angular/router';
   template: `
     <body>
       <div>Paused</div>
-      <button [routerLink]="['/board']">Resume</button>
-      <button (click)="savegame()">Save and Quit</button>
+      <button (click)="resumeGame()">Resume</button>
+      <button (click)="saveGame()">Save and Quit</button>
       <button [routerLink]="['/']">Quit</button>
-      <p>Test words: {{word}}</p>
+      <p>Test words: {{ word }}</p>
+    </body>
   `,
   styleUrl: './pause.component.css'
 })
 export class PauseComponent {
-  constructor(private router: Router) {}
+  game: Game | null = null;
+  word = '';
 
-  public word = '';
+  constructor(private router: Router) {
+    // Access the state object from the router
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state as { game: Game };
 
-  // TODO: storage = inject(StorageService)
+    if (state?.game) {
+      this.game = state.game;
+      console.log("Game passed to PauseComponent:", this.game);
+    } else {
+      console.error("No game found in state. Returning to start screen.");
+      this.router.navigate(['/']);
+    }
+  }
 
-  savegame() {
-    // test to see if function is called
-    this.word = "Ey!";
+  saveGame() {
+    // Placeholder for saving the game
+    this.word = "Game saved!";
 
-    // TODO: call function in storage service to save game to firebase
-      // it's called saveGame() for now
-    // this.storage.saveGame();
+    // Add your storage service logic here, e.g.:
+    // this.storageService.saveGame(this.game!);
 
-    // wait 3 seconds before going back to start screen
-      // (for debugging purposes)
+    // Simulate save delay and navigate to the start screen
     setTimeout(() => {
       this.router.navigate(['/']);
     }, 3000);
+  }
+
+  resumeGame() {
+    // Navigate back to the board and pass the game object back as state
+    this.router.navigate(['/board'], {
+      state: { game: this.game }
+    });
   }
 }

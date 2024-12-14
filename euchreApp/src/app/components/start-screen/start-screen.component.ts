@@ -40,7 +40,7 @@ export class StartScreenComponent {
   ];
 
     console.log("submitted");
-    // this.game = this.gameService.initializeGame(playerNames);
+    this.game = this.gameService.initializeGame(playerNames);
     // console.log('Game initialized:', this.game);
 
     // if (this.game && true) {
@@ -53,11 +53,10 @@ export class StartScreenComponent {
     // // Navigate to the board after initializing the game
     // this.router.navigate(['/board']);
 
-
-  // Navigate to the board component with player names as query parameters
-  this.router.navigate(['/board'], {
-    queryParams: { players: JSON.stringify(playerNames) },
-  });
+    // Navigate to the board and pass the game object as state
+    this.router.navigate(['/board'], {
+      state: { game: this.game }
+    });
   }
 }
 
