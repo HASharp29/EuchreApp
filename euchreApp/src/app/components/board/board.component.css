@@ -25,17 +25,38 @@ body {
 .table-center {
   position: absolute;
   /* Position in the middle of the grid */
-  top: 55%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 20%;
   /* Set a specific width for the center area */
-  height: 20%;
+  height: 30%;
   /* Set a specific height for the center area */
   background-color: skyblue;
   /* A light background to represent the card space */
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+#center-card-1 {
+  grid-area: 2 / 1;
+}
+
+#center-card-2 {
+  grid-area: 1 / 1;
+}
+
+#center-card-3 {
+  grid-area: 1 / 2;
+}
+
+#center-card-4 {
+  grid-area: 2 / 2;
 }
 
 .player-space {
@@ -43,8 +64,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 40em;
-  max-height: 20em;
+  width: 500px;
+  height: 400px;
   margin: 2em;
 }
 
@@ -74,14 +95,6 @@ body {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.unplayable-card {
-  max-height: 8em;
-  max-width: 4em;
-  margin: 1em;
-  border-radius: 5px;
-  border: 1px solid;
-}
-
 .player-image {
   max-height: 8em;
   max-width: 12em;
@@ -97,11 +110,11 @@ body {
 }
 
 #player-3 {
-  grid-area: 2 / 1;
+  grid-area: 2 / 2;
 }
 
 #player-4 {
-  grid-area: 2 / 2;
+  grid-area: 2 / 1;
 }
 
 .game-stats {
@@ -118,4 +131,9 @@ body {
 
 .game-stats * {
   padding: 1em;
+}
+
+.temporary-button {
+  margin: 1em;
+  border: 1px solid;
 }

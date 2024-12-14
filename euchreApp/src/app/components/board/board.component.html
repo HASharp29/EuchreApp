@@ -2,20 +2,24 @@
 
   <div class="table-center">
     @if(game.currentRound.currentTrick.cardsPlayed && game.currentRound.currentTrick.cardsPlayed.length >= 4) {
-      @if(game.currentRound.currentTrick.cardsPlayed[0]) {
-        <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[0].photo }}" alt="help" class="card">
-      }
-      @if(game.currentRound.currentTrick.cardsPlayed[1]) {
-        <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[1].photo }}" alt="help" class="card">
-      }
-      @if(game.currentRound.currentTrick.cardsPlayed[2]) {
-        <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[2].photo }}" alt="help" class="card">
-      }
-      @if(game.currentRound.currentTrick.cardsPlayed[3]) {
-        <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[3].photo }}" alt="help" class="card">
-      }
-    } 
-    
+    @if(game.currentRound.currentTrick.cardsPlayed[0]) {
+    <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[0].photo }}" alt="help" class="card"
+      id="center-card-1">
+    }
+    @if(game.currentRound.currentTrick.cardsPlayed[1]) {
+    <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[1].photo }}" alt="help" class="card"
+      id="center-card-2">
+    }
+    @if(game.currentRound.currentTrick.cardsPlayed[2]) {
+    <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[2].photo }}" alt="help" class="card"
+      id="center-card-3">
+    }
+    @if(game.currentRound.currentTrick.cardsPlayed[3]) {
+    <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[3].photo }}" alt="help" class="card"
+      id="center-card-4">
+    }
+    }
+
   </div>
 
   @for(player of game.players; track player.index) {
@@ -31,7 +35,7 @@
       }
       @else {
       @for(card of game.currentRound.hands[player.index]; track card.photo) {
-      <img src="photos/deck/{{ card.photo }}" alt="something went wrong" class="card">
+      <img src="photos/deck/back_dark.png" alt="something went wrong" class="card">
       }
       }
     </div>
@@ -40,12 +44,17 @@
 </div>
 <div class="game-stats">
   <h2>Game Stats</h2>
-  <p>Team 1 Score: 0</p>
-  <p>Team 2 Score: 0</p>
+  <p>Team 1 Tricks Won: {{this.game.currentRound.tricksWon[0]}}</p>
+  <p>Team 2 Tricks Won: {{this.game.currentRound.tricksWon[1]}}</p>
+  <p>Team 1 Rounds Won: {{this.game.score[0]}}</p>
+  <p>Team 2 Rounds Won: {{this.game.score[1]}}</p>
   <p>{{this.game.currentRound.trumpSuit}} is trump</p>
-  <p>{{ this.currentPlayer.name }} is the dealer</p>
+  <p>It is {{ this.currentPlayer.name }}'s turn</p>
   <p>Rick Astley called trump</p>
 </div>
-<button class="temporary-change-player-button" (click)="changePlayer()">Change Player</button>
-<button class="temporary-calculate-score" (click)="currentPlayer === game.players[3] && calculateScore()">Calculate
+<button class="temporary-button" (click)="changePlayer()" [disabled]="currentPlayer.index === 3">Change Player</button>
+<button class="temporary-button" (click)="calculateScore()" [disabled]="currentPlayer !== game.players[3]">Calculate
   Score</button>
+<button class="temporary-button" (click)="this.game.currentRound.trickCounter === 5 && scoreRound()"
+  [disabled]="this.game.currentRound.trickCounter !== 5">Score
+  Round</button>
