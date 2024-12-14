@@ -1,21 +1,7 @@
 * {
-  margin: 0%;
+  margin: 0;
   padding: 0;
-  border: 1px solid;
 }
-
-/* body {
-  display: flex;
-  background-color: orange;
-  height: 100%;
-  width: 100%;
-  border: 2px solid
-} */
-
-/* html {
-  background-color: green;
-  height: 100;
-} */
 
 .game-table {
   display: grid;
@@ -25,25 +11,26 @@
   padding: 20px;
   justify-items: center;
   align-items: center;
-  height: 100vh;
+  height: 90vh;
   position: relative;
   float: left;
+  background-color: green;
 }
 
 .table-center {
   position: absolute;
   /* Position in the middle of the grid */
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 20%;
   /* Set a specific width for the center area */
   height: 30%;
   /* Set a specific height for the center area */
-  background-color: skyblue;
+  background-color: green;
+  ;
   /* A light background to represent the card space */
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /*border-radius: 10px;*/
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
@@ -74,7 +61,12 @@
   justify-content: center;
   width: 500px;
   height: 400px;
-  margin: 2em;
+  margin: 0em;
+  border: 1px solid;
+}
+
+.player-space h2 {
+  color: white;
 }
 
 .cards {
@@ -90,6 +82,12 @@
   border-radius: 5px;
   border: 1px solid;
   transition: box-shadow 0.3s ease;
+}
+
+.card-pile {
+  max-height: 9em;
+  max-width: 5em;
+  margin: 1em;
 }
 
 .card {
@@ -130,7 +128,7 @@
   display: block;
   border: 1px solid;
   border-radius: 10px;
-  background-color: skyblue;
+  background-color: burlywood;
   margin: 1em;
   width: 25%;
   height: 100%;
@@ -144,4 +142,8 @@
 .temporary-button {
   margin: 1em;
   border: 1px solid;
+}
+
+.tricks-won {
+  display: inline;
 }

@@ -191,6 +191,7 @@ export class StorageService {
             cardLed: null,
           },
           tricksWon: roundData['tricksWon'],
+          tricksWonPlayer: roundData['tricksWon'],
         };
 
         rounds.push(round);

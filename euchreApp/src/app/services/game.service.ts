@@ -35,6 +35,7 @@ export interface Round {
   currentTrick: Trick; //state of current trick
   previousTrick: Trick;
   tricksWon: [number, number]; //score within round, for teams 0 and 1
+  tricksWonPlayer: [number, number, number, number];
 }
 
 // this interface keeps the state of the game
@@ -114,12 +115,13 @@ export class GameService {
       hands,
       kittyCard,
       dealer, //input of function
-      caller: players[1],
+      caller: players[3],
       outPlayer: null,
       trumpSuit: "hearts",
       trickCounter: 0,
       currentTrick,
       tricksWon: [0, 0],
+      tricksWonPlayer: [0, 0, 0, 0],
       previousTrick: currentTrick,
     };
   }
@@ -286,6 +288,8 @@ export class GameService {
     const players = game.players;
 
     const winningPlayerIndex: number = winningPlayer.index;
+
+    round.tricksWonPlayer[winningPlayerIndex]++;
 
     // Update the tricksWon array for the respective team
     if (winningPlayerIndex === 0 || winningPlayerIndex === 2) {

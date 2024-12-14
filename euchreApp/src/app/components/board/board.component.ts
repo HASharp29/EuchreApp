@@ -25,8 +25,7 @@ export class BoardComponent {
 
       // Initialize the game with player names
       if (playerNames.length === 4) {
-        this.game = this.gameService.initializeGame(playerNames); // game reset with players
-        this.game.currentRound.currentTrick.currentPlayer = this.game.players[0]; // Set the first player as the current player
+        this.game = this.gameService.initializeGame(playerNames); // game reset with players // Set the first player as the current player
       } else {
         console.error("Invalid player names provided");
       }
