@@ -19,7 +19,8 @@ export interface Trick {
   cardsPlayed: [Card | null, Card | null, Card | null, Card | null]; //cards played, index corresponds to player
   leadPlayer: Player | null; //player who played first card
   cardLed: Card | null; //card led
-  currentPlayer: Player | null;
+  currentPlayer: Player;
+  playedCounter: number;
 }
 
 // this interfaces keeps track of one round. it also contains the current trick
@@ -97,6 +98,7 @@ export class GameService {
       leadPlayer: leadPlayer,
       cardLed: null,
       currentPlayer: leadPlayer,
+      playedCounter: 0,
     };
   }
 
@@ -111,7 +113,7 @@ export class GameService {
       hands,
       kittyCard,
       dealer, //input of function
-      caller: null,
+      caller: players[1],
       outPlayer: null,
       trumpSuit: "hearts",
       trickCounter: 0,
@@ -243,6 +245,7 @@ export class GameService {
     trick.cardsPlayed[player.index] = cardToPlay;
     trick.currentPlayer = game.players[(player.index + 1) % 4]
     playerHand.splice(cardToPlayIndex, 1);
+    trick.playedCounter++;
   }
 
   //given a trick where all players have put down card, determine trick winner
@@ -300,7 +303,8 @@ export class GameService {
   }
 
   //update score, reset round
-  scoreRound(game: Game): void {
+  scoreRound(game: Game): number {
+    console.log("ESJLUHFESLHUSFE:HUSFE:U:IE");
     const round = game.currentRound;
 
     if (round.trickCounter < 5) {
@@ -329,10 +333,17 @@ export class GameService {
       game.score[(winningTeam + 1) % 2] += 2;
       console.log(`Team ${winningTeam} euchred Team ${(winningTeam + 1) % 2}, winning ${tricksWon} tricks. Team ${winningTeam} gets 2 points.`)
     }
+    if (game.score[0] >= 2) {
+      return 0;
+    }
+    else if (game.score[1] >= 2) {
+      return 1;
+    }
 
     //reset round, moving to next dealer
     game.currentRound = this.createRound(game.players, game.players[(round.dealer.index + 1) % 4]);
     game.roundCounter++;
+    return -1;
   }
 
 

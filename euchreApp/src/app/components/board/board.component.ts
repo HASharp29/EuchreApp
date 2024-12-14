@@ -14,9 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 export class BoardComponent {
   gameService = inject(GameService);
   activatedRoute = inject(ActivatedRoute);
-  game: Game = this.gameService.initializeGame(['','','','']); //game initialized with emptyh strings (will be reset later)
-  currentPlayer: Player = this.game.players[0];
-  playerHasPlayed: boolean = false;
+  game: Game = this.gameService.initializeGame(['', '', '', '']); //game initialized with empty strings (will be reset later)
 
   constructor() {
     // Get player names from query parameters
@@ -27,7 +25,7 @@ export class BoardComponent {
       // Initialize the game with player names
       if (playerNames.length === 4) {
         this.game = this.gameService.initializeGame(playerNames); // game reset with players
-        this.currentPlayer = this.game.players[0]; // Set the first player as the current player
+        this.game.currentRound.currentTrick.currentPlayer = this.game.players[0]; // Set the first player as the current player
       } else {
         console.error("Invalid player names provided");
       }
@@ -35,27 +33,26 @@ export class BoardComponent {
   }
   playCard(card: Card) {
     console.log(card.rank + card.suit);
-    console.log(this.game.currentRound.hands);
-    this.gameService.playCard(this.game, this.currentPlayer, card);
-    this.playerHasPlayed = true;
-  }
-
-  changePlayer() {
-    const nextPlayerIndex = (this.currentPlayer.index + 1); // Move to next player
-    this.currentPlayer = this.game.players[nextPlayerIndex];
-    this.playerHasPlayed = false;
+    this.gameService.playCard(this.game, this.game.currentRound.currentTrick.currentPlayer!, card);
+    if (this.game.currentRound.currentTrick.playedCounter === 4) {
+      this.calculateScore();
+    }
   }
 
   calculateScore() {
     const winner = this.gameService.determineTrickWinner(this.game);
     console.log(winner)
-    alert(winner.name + " is the winner!");
     this.gameService.scoreTrick(this.game, winner);
-    this.currentPlayer = this.game.players[0];
-    this.playerHasPlayed = false;
+    alert(winner.name + " is the winner!");
   }
 
   scoreRound() {
-    this.gameService.scoreRound(this.game);
+    const winningTeam = this.gameService.scoreRound(this.game);
+    if (winningTeam === 0) {
+      alert("Team 1 wins");
+    }
+    else if (winningTeam === 1) {
+      alert("Team 2 wins");
+    }
   }
 }

@@ -12,20 +12,20 @@ import { Game, Round, Trick, Card, Player } from './game.service';
 })
 export class StorageService {
   firestore: Firestore = inject(Firestore);
-  
+
   async saveGame(game: Game): Promise<void> {
     try {
       const gameCollection = collection(this.firestore, 'games');
-  
+
       // Add the game document (basic game details)
       const gameDocRef = await addDoc(gameCollection, {
         roundCounter: game.roundCounter,
         score: game.score,
         timestamp: serverTimestamp(), // Add the timestamp
       });
-  
+
       console.log('Game document created:', gameDocRef.id);
-  
+
       // Save players as a subcollection
       const playersCollection = collection(gameDocRef, 'players');
       for (const player of game.players) {
@@ -34,7 +34,7 @@ export class StorageService {
           index: player.index,
         });
       }
-  
+
       // Save the current round as a subcollection
       const roundsCollection = collection(gameDocRef, 'rounds');
       const roundDocRef = await addDoc(roundsCollection, {
@@ -46,35 +46,35 @@ export class StorageService {
         trickCounter: game.currentRound.trickCounter,
         tricksWon: game.currentRound.tricksWon,
       });
-  
+
       // Save the current trick as a subcollection
       const tricksCollection = collection(roundDocRef, 'tricks');
       await addDoc(tricksCollection, {
         leadPlayer: game.currentRound.currentTrick.leadPlayer?.index || null,
         cardLed: game.currentRound.currentTrick.cardLed
           ? {
-              suit: game.currentRound.currentTrick.cardLed.suit,
-              rank: game.currentRound.currentTrick.cardLed.rank,
-              photo: game.currentRound.currentTrick.cardLed.photo,
-            }
+            suit: game.currentRound.currentTrick.cardLed.suit,
+            rank: game.currentRound.currentTrick.cardLed.rank,
+            photo: game.currentRound.currentTrick.cardLed.photo,
+          }
           : null,
         cardsPlayed: game.currentRound.currentTrick.cardsPlayed.map((card) =>
           card
             ? {
-                suit: card.suit,
-                rank: card.rank,
-                photo: card.photo,
-              }
+              suit: card.suit,
+              rank: card.rank,
+              photo: card.photo,
+            }
             : null
         ),
       });
-  
+
       // Save each player's hand as a subcollection
       const handsCollection = collection(roundDocRef, 'hands');
       for (let playerIndex = 0; playerIndex < game.currentRound.hands.length; playerIndex++) {
         const playerHand = game.currentRound.hands[playerIndex];
         const handDocRef = doc(handsCollection, playerIndex.toString());
-  
+
         // Save each card in the player's hand as a subcollection
         const cardsCollection = collection(handDocRef, 'cards');
         for (const card of playerHand) {
@@ -88,14 +88,14 @@ export class StorageService {
           }
         }
       }
-  
+
       console.log('Game saved successfully.');
     } catch (error) {
       console.error('Error saving game:', error);
       throw error;
     }
   }
-  
+
 
   async getGame(gameId: string): Promise<Game | null> {
     try {
@@ -166,7 +166,8 @@ export class StorageService {
             cardsPlayed,
             leadPlayer: trickData['leadPlayer'] ? players.find(p => p.index === trickData['leadPlayer']) || null : null,
             cardLed: trickData['cardLed'] ? trickData['cardLed'] as Card : null,
-            currentPlayer: trickData['currentPlayer'] ? trickData['currentPlayer'] as Player : null,
+            currentPlayer: trickData['currentPlayer'],
+            playedCounter: trickData['playedCounter'],
           });
         });
 

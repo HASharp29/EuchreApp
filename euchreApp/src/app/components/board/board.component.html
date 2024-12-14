@@ -25,12 +25,12 @@
   @for(player of game.players; track player.index) {
   <div class="player-space" id="player-{{player.index}}">
     <p>Player {{player.index + 1 }}: {{ game.players[player.index].name }}</p>
-    <!-- <img src="https://media.tenor.com/wQZdn6U1RoQAAAAM/dance-happy.gif" alt="The dancing baby GIF" class="player-image"> -->
+    <img src="https://media.tenor.com/wQZdn6U1RoQAAAAM/dance-happy.gif" alt="The dancing baby GIF" class="player-image">
     <div class="cards">
-      @if(player === this.currentPlayer) {
+      @if(player === this.game.currentRound.currentTrick.currentPlayer) {
       @for(card of game.currentRound.hands[player.index]; track card!.photo){
       <img src="photos/deck/{{ card.photo }}" alt="Something went wrong" class="current-player-card"
-        (click)="!playerHasPlayed && playCard(card)">
+        (click)="playCard(card)">
       }
       }
       @else {
@@ -49,11 +49,11 @@
   <p>Team 1 Rounds Won: {{this.game.score[0]}}</p>
   <p>Team 2 Rounds Won: {{this.game.score[1]}}</p>
   <p>{{this.game.currentRound.trumpSuit}} is trump</p>
-  <p>It is {{ this.currentPlayer.name }}'s turn</p>
+  <p>It is {{ this.game.currentRound.currentTrick.currentPlayer.name }}'s turn</p>
   <p>Rick Astley called trump</p>
 </div>
-<button class="temporary-button" (click)="changePlayer()" [disabled]="currentPlayer.index === 3">Change Player</button>
-<button class="temporary-button" (click)="calculateScore()" [disabled]="currentPlayer !== game.players[3]">Calculate
+<button class="temporary-button" (click)="calculateScore()"
+  [disabled]="game.currentRound.currentTrick.currentPlayer !== game.players[3]">Calculate
   Score</button>
 <button class="temporary-button" (click)="this.game.currentRound.trickCounter === 5 && scoreRound()"
   [disabled]="this.game.currentRound.trickCounter !== 5">Score
