@@ -1,58 +1,60 @@
-<div class="game-table">
+<body>
+  <div class="game-table">
 
-  <div class="table-center">
-    @if(game.currentRound.currentTrick.cardsPlayed && game.currentRound.currentTrick.cardsPlayed.length >= 4) {
-    @if(game.currentRound.currentTrick.cardsPlayed[0]) {
-    <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[0].photo }}" alt="help" class="card"
-      id="center-card-1">
-    }
-    @if(game.currentRound.currentTrick.cardsPlayed[1]) {
-    <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[1].photo }}" alt="help" class="card"
-      id="center-card-2">
-    }
-    @if(game.currentRound.currentTrick.cardsPlayed[2]) {
-    <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[2].photo }}" alt="help" class="card"
-      id="center-card-3">
-    }
-    @if(game.currentRound.currentTrick.cardsPlayed[3]) {
-    <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[3].photo }}" alt="help" class="card"
-      id="center-card-4">
-    }
-    }
+    <div class="table-center">
+      @if(game.currentRound.currentTrick.cardsPlayed && game.currentRound.currentTrick.cardsPlayed.length >= 4) {
+      @if(game.currentRound.currentTrick.cardsPlayed[0]) {
+      <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[0].photo }}" alt="help" class="card"
+        id="center-card-1">
+      }
+      @if(game.currentRound.currentTrick.cardsPlayed[1]) {
+      <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[1].photo }}" alt="help" class="card"
+        id="center-card-2">
+      }
+      @if(game.currentRound.currentTrick.cardsPlayed[2]) {
+      <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[2].photo }}" alt="help" class="card"
+        id="center-card-3">
+      }
+      @if(game.currentRound.currentTrick.cardsPlayed[3]) {
+      <img src="photos/deck/{{ game.currentRound.currentTrick.cardsPlayed[3].photo }}" alt="help" class="card"
+        id="center-card-4">
+      }
+      }
 
-  </div>
-
-  @for(player of game.players; track player.index) {
-  <div class="player-space" id="player-{{player.index}}">
-    <p>Player {{player.index + 1 }}: {{ game.players[player.index].name }}</p>
-    <img src="https://media.tenor.com/wQZdn6U1RoQAAAAM/dance-happy.gif" alt="The dancing baby GIF" class="player-image">
-    <div class="cards">
-      @if(player === this.game.currentRound.currentTrick.currentPlayer) {
-      @for(card of game.currentRound.hands[player.index]; track card!.photo){
-      <img src="photos/deck/{{ card.photo }}" alt="Something went wrong" class="current-player-card"
-        (click)="playCard(card)">
-      }
-      }
-      @else {
-      @for(card of game.currentRound.hands[player.index]; track card.photo) {
-      <img src="photos/deck/back_dark.png" alt="something went wrong" class="card">
-      }
-      }
     </div>
+
+    @for(player of game.players; track player.index) {
+    <div class="player-space" id="player-{{player.index}}">
+      <p>Player {{player.index + 1 }}: {{ game.players[player.index].name }}</p>
+      <img src="https://media.tenor.com/wQZdn6U1RoQAAAAM/dance-happy.gif" alt="The dancing baby GIF"
+        class="player-image">
+      <div class="cards">
+        @if(player === this.game.currentRound.currentTrick.currentPlayer) {
+        @for(card of game.currentRound.hands[player.index]; track card!.photo){
+        <img src="photos/deck/{{ card.photo }}" alt="Something went wrong" class="current-player-card"
+          (click)="playCard(card)">
+        }
+        }
+        @else {
+        @for(card of game.currentRound.hands[player.index]; track card.photo) {
+        <img src="photos/deck/back_dark.png" alt="something went wrong" class="card">
+        }
+        }
+      </div>
+    </div>
+    }
   </div>
+  <div class="game-stats">
+    <h2>Game Stats</h2>
+    <p>Team 1 Tricks Won: {{this.game.currentRound.tricksWon[0]}}</p>
+    <p>Team 2 Tricks Won: {{this.game.currentRound.tricksWon[1]}}</p>
+    <p>Team 1 Score: {{this.game.score[0]}}</p>
+    <p>Team 2 Score: {{this.game.score[1]}}</p>
+    <p>{{this.game.currentRound.trumpSuit}} is trump</p>
+    <p>It is {{ this.game.currentRound.currentTrick.currentPlayer.name }}'s turn</p>
+    <p>Rick Astley called trump</p>
+  </div>
+  @if(gameOver === true) {
+  <button class="temporary-button" [routerLink]="['/']">Play Again</button>
   }
-</div>
-<div class="game-stats">
-  <h2>Game Stats</h2>
-  <p>Team 1 Tricks Won: {{this.game.currentRound.tricksWon[0]}}</p>
-  <p>Team 2 Tricks Won: {{this.game.currentRound.tricksWon[1]}}</p>
-  <p>Team 1 Score: {{this.game.score[0]}}</p>
-  <p>Team 2 Score: {{this.game.score[1]}}</p>
-  <p>{{this.game.currentRound.trumpSuit}} is trump</p>
-  <p>It is {{ this.game.currentRound.currentTrick.currentPlayer.name }}'s turn</p>
-  <p>Rick Astley called trump</p>
-</div>
-@if(gameOver === true) {
-<button class="temporary-button" [routerLink]="['/']">Play Again</button>
-}
-<h1>Euchre is fun.</h1>
+</body>
