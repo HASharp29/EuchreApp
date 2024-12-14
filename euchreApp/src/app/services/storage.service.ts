@@ -166,6 +166,7 @@ export class StorageService {
             cardsPlayed,
             leadPlayer: trickData['leadPlayer'] ? players.find(p => p.index === trickData['leadPlayer']) || null : null,
             cardLed: trickData['cardLed'] ? trickData['cardLed'] as Card : null,
+            currentPlayer: trickData['currentPlayer'] ? trickData['currentPlayer'] as Player : null,
           });
         });
 
