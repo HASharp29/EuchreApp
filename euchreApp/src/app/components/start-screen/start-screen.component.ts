@@ -40,18 +40,24 @@ export class StartScreenComponent {
   ];
 
     console.log("submitted");
-    this.game = this.gameService.initializeGame(playerNames);
-    console.log('Game initialized:', this.game);
+    // this.game = this.gameService.initializeGame(playerNames);
+    // console.log('Game initialized:', this.game);
 
-    if (this.game && true) {
-      // Save the game to Firestore
-      // await this.storageService.saveGame(this.game!);
-      // const tempGame: Game | null = await this.storageService.getGame('U8lCnEkdAl8sq0WBiVza');
-      // console.log(tempGame);
-    }
+    // if (this.game && true) {
+    //   // Save the game to Firestore
+    //   // await this.storageService.saveGame(this.game!);
+    //   // const tempGame: Game | null = await this.storageService.getGame('U8lCnEkdAl8sq0WBiVza');
+    //   // console.log(tempGame);
+    // }
 
-    // Navigate to the board after initializing the game
-    this.router.navigate(['/board']);
+    // // Navigate to the board after initializing the game
+    // this.router.navigate(['/board']);
+
+
+  // Navigate to the board component with player names as query parameters
+  this.router.navigate(['/board'], {
+    queryParams: { players: JSON.stringify(playerNames) },
+  });
   }
 }
 
