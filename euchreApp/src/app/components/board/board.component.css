@@ -3,6 +3,23 @@
   padding: 0;
 }
 
+/* body {
+  display: flex;
+  background-color: orange;
+  height: 100%;
+  width: 100%;
+  border: 2px solid
+} */
+
+/* html {
+  background-color: green;
+  height: 100;
+} */
+
+.topbar {
+  display: flex;
+}
+
 .game-table {
   display: grid;
   grid-template-columns: 1fr 1fr;
