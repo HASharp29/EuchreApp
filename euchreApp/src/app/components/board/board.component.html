@@ -28,7 +28,7 @@
     @for(player of game.players; track player.index) {
     <div class="player-space" id="player-{{player.index}}">
       <p>Player {{player.index + 1 }}: {{ game.players[player.index].name }}</p>
-      <img src="https://media.tenor.com/wQZdn6U1RoQAAAAM/dance-happy.gif" alt="The dancing baby GIF"
+      <!-- <img src="https://media.tenor.com/wQZdn6U1RoQAAAAM/dance-happy.gif" alt="The dancing baby GIF" -->
         class="player-image">
       <div class="cards">
         @if(player === this.game.currentRound.currentTrick.currentPlayer) {

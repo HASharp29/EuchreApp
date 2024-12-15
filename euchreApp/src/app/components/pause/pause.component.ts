@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Game } from '../../services/game.service';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-pause',
@@ -12,16 +13,17 @@ import { Game } from '../../services/game.service';
       <button (click)="resumeGame()">Resume</button>
       <button (click)="saveGame()">Save and Quit</button>
       <button [routerLink]="['/']">Quit</button>
-      <p>Test words: {{ word }}</p>
     </body>
   `,
   styleUrl: './pause.component.css'
 })
 export class PauseComponent {
   game: Game | null = null;
-  word = '';
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router, 
+    private storageService: StorageService,
+  ) {
     // Access the state object from the router
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras.state as { game: Game };
@@ -33,14 +35,13 @@ export class PauseComponent {
       console.error("No game found in state. Returning to start screen.");
       this.router.navigate(['/']);
     }
+
+    
   }
 
-  saveGame() {
-    // Placeholder for saving the game
-    this.word = "Game saved!";
-
-    // Add your storage service logic here, e.g.:
-    // this.storageService.saveGame(this.game!);
+  async saveGame() {
+    // Save the game to Firestore
+    await this.storageService.saveGame(this.game!);
 
     // Simulate save delay and navigate to the start screen
     setTimeout(() => {
