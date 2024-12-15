@@ -1,37 +1,36 @@
 * {
-  margin: 0%;
+  margin: 0;
   padding: 0;
-  border: 1px solid;
+  /* border: 1px solid */
 }
 
-/* body {
-  display: flex;
-  background-color: orange;
-  height: 100%;
-  width: 100%;
-  border: 2px solid
-} */
-
-/* html {
+body {
+  display: grid;
   background-color: green;
-  height: 100;
-} */
+  grid-template-columns: 4fr 1fr;
+}
 
 .topbar {
-  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2.5rem; 
+  padding: 1rem;
+  padding-left: 1rem;
+  display: flex; 
+  justify-content: start;
+  align-items: center;
+  z-index: 1000; /* Ensure it stays above other elements */
 }
 
 .game-table {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 20px;
-  padding: 20px;
-  justify-items: center;
-  align-items: center;
-  height: 100vh;
   position: relative;
-  float: left;
+  background-color: green;
+  margin-bottom: 4rem;
 }
 
 .table-center {
@@ -40,51 +39,64 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 20%;
-  /* Set a specific width for the center area */
-  height: 30%;
-  /* Set a specific height for the center area */
-  background-color: skyblue;
-  /* A light background to represent the card space */
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 12rem;
+  height: 12rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   align-items: center;
-  justify-items: center;
+  justify-content: end;
 }
 
-#center-card-1 {
+#center-card-0 {
   grid-area: 2 / 1;
 }
 
-#center-card-2 {
+#center-card-1 {
   grid-area: 1 / 1;
 }
 
-#center-card-3 {
+#center-card-2 {
   grid-area: 1 / 2;
 }
 
-#center-card-4 {
+#center-card-3 {
   grid-area: 2 / 2;
 }
 
 .player-space {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-areas: 
+    "trickl content trickr";
+  grid-template-columns: auto 1fr auto;
   justify-content: center;
-  width: 500px;
-  height: 400px;
-  margin: 2em;
+  /* border: 1px solid; */
+  align-items: center;
+}
+
+.player h2 {
+  text-align: center;
+  color: #f0d1ab;
+}
+
+.player {
+  height: 60%;
+  width: 100%;
+  grid-area: content;
 }
 
 .cards {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.top {
+  align-self: top;
+}
+
+.bottom {
+  align-self: end;
 }
 
 .current-player-card {
@@ -94,6 +106,29 @@
   border-radius: 5px;
   border: 1px solid;
   transition: box-shadow 0.3s ease;
+}
+
+.tricks-won {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 5rem;
+  margin-top: 8rem;
+}
+
+.tricks-won.left {
+  grid-area: trickl;
+}
+
+.tricks-won.right {
+  grid-area: trickr;
+}
+
+.card-pile {
+  max-height: 9em;
+  max-width: 5em;
+  margin: -1em;
+  transform: rotate(90deg);
 }
 
 .card {
@@ -134,10 +169,8 @@
   display: block;
   border: 1px solid;
   border-radius: 10px;
-  background-color: skyblue;
-  margin: 1em;
-  width: 25%;
-  height: 100%;
+  background-color: #f0d1ab;
+  margin: 1rem;
   position: relative;
 }
 
@@ -149,3 +182,22 @@
   margin: 1em;
   border: 1px solid;
 }
+
+button {
+  background-color: #F0D1AB; 
+  margin: 0px;
+  color: black; 
+  padding: 10px 20px; 
+  border: 1px solid black;
+  border-radius: 5px; 
+  font-size: 1em; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+button:hover {
+  background-color: tan; /* Darker green on hover */
+}
+
+
+

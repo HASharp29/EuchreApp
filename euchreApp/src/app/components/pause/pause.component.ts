@@ -7,14 +7,7 @@ import { StorageService } from '../../services/storage.service';
   selector: 'app-pause',
   standalone: true,
   imports: [RouterModule],
-  template: `
-    <body>
-      <div>Paused</div>
-      <button (click)="resumeGame()">Resume</button>
-      <button (click)="saveGame()">Save and Quit</button>
-      <button [routerLink]="['/']">Quit</button>
-    </body>
-  `,
+  templateUrl: './pause.component.html',
   styleUrl: './pause.component.css'
 })
 export class PauseComponent {

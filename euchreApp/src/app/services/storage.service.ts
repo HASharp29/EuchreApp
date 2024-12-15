@@ -191,6 +191,7 @@ export class StorageService {
             cardLed: null,
           },
           tricksWon: roundData['tricksWon'],
+          tricksWonPlayer: roundData['tricksWon'],
         };
 
         rounds.push(round);
@@ -208,6 +209,46 @@ export class StorageService {
     } catch (error) {
       console.error('Error retrieving game:', error);
       return null;
+    }
+  }
+
+  async getAllGames(): Promise<{ gameId: string, timestamp: any, players: Player[] }[]> {
+    try {
+      // Reference to the 'games' collection
+      const gamesCollection = collection(this.firestore, 'games');
+      
+      // Retrieve all game documents from Firestore
+      const gamesSnapshot = await getDocs(gamesCollection);
+      
+      const gamesList: { gameId: string, timestamp: any, players: Player[] }[] = [];
+
+      // Iterate through all the games in the snapshot
+      for (const gameDoc of gamesSnapshot.docs) {
+        const gameData = gameDoc.data();
+
+        // Get the game ID
+        const gameId = gameDoc.id;
+
+        // Get the timestamp of the game
+        const timestamp = gameData['timestamp'];
+
+        // Retrieve players subcollection for each game
+        const playersCollection = collection(gameDoc.ref, 'players');
+        const playersSnapshot = await getDocs(playersCollection);
+
+        const players: Player[] = [];
+        playersSnapshot.forEach(playerDoc => {
+          players.push(playerDoc.data() as Player);
+        });
+
+        // Add the game information to the list
+        gamesList.push({ gameId, timestamp, players });
+      }
+
+      return gamesList;
+    } catch (error) {
+      console.error('Error retrieving games:', error);
+      return [];
     }
   }
 

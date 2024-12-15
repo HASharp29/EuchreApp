@@ -3,9 +3,11 @@ import { GameService, Game, Round, Card, Player, Trick } from '../../services/ga
 import { RouterLink, Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
 import { ActivatedRoute } from '@angular/router';
+import { NgClass } from '@angular/common';
+
 @Component({
   selector: 'app-board',
-  imports: [RouterLink],
+  imports: [RouterLink, NgClass],
   standalone: true,
   templateUrl: './board.component.html',
   styleUrl: './board.component.css'

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { GameService, Game } from '../../services/game.service';
+import { GameService, Game, Player } from '../../services/game.service';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
@@ -14,6 +14,7 @@ import { StorageService } from '../../services/storage.service';
 })
 export class StartScreenComponent {
   game: Game | null = null;
+  gameList: { gameId: string, timestamp: any, players: Player[] } | null = null;
   
   fb = inject(FormBuilder);
   playerForm = this.fb.group({
@@ -28,6 +29,24 @@ export class StartScreenComponent {
     private storageService: StorageService,
     private router: Router,
   ) { }
+
+  ngOnInit(): void {
+    this.loadGames();
+  }
+
+  async loadGames() {
+    // Load all games using the StorageService
+    // this.gameList = await this.storageService.getAllGames();
+  }
+
+  // Format the game display to show timestamp and player names
+  formatGameDisplay(game: { gameId: string, timestamp: any, players: Player[] }): string {
+    const date = game.timestamp.toDate();  // Convert Firestore Timestamp to JS Date
+    const dateString = date.toLocaleString(); // Format the date as a string
+    const playerNames = game.players.map(player => player.name).join(', '); // Get player names
+
+    return `${dateString} - ${playerNames}`;
+  }
 
   async startGame() {
 
