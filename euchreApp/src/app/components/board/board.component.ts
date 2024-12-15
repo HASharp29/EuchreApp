@@ -1,11 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { GameService, Game, Round, Card, Player, Trick } from '../../services/game.service';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
 import { ActivatedRoute } from '@angular/router';
+import { NgClass } from '@angular/common';
+
 @Component({
   selector: 'app-board',
-  imports: [RouterLink],
+  imports: [RouterLink, NgClass],
   standalone: true,
   templateUrl: './board.component.html',
   styleUrl: './board.component.css'
@@ -17,20 +19,21 @@ export class BoardComponent {
   game: Game = this.gameService.initializeGame(['', '', '', '']); //game initialized with empty strings (will be reset later)
   gameOver: boolean = false;
 
-  constructor() {
-    // Get player names from query parameters
-    this.activatedRoute.queryParams.subscribe((params) => {
-      const playerNames = JSON.parse(params['players'] || '[]');
-      console.log("Player Names from Query Params:", playerNames);
+  constructor(private router: Router) {
+    // Access the state object from the router
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state as { game: Game };
 
-      // Initialize the game with player names
-      if (playerNames.length === 4) {
-        this.game = this.gameService.initializeGame(playerNames); // game reset with players // Set the first player as the current player
-      } else {
-        console.error("Invalid player names provided");
-      }
-    });
+    if (state?.game) {
+      this.game = state.game;
+      console.log("Game passed to BoardComponent:", this.game);
+
+    } else {
+      console.error("No game found in state. Returning to start screen.");
+      this.router.navigate(['/']);
+    }
   }
+
   playCard(card: Card) {
     console.log(card.rank + card.suit);
     this.gameService.playCard(this.game, this.game.currentRound.currentTrick.currentPlayer!, card);
@@ -60,5 +63,12 @@ export class BoardComponent {
       this.gameOver = true;
       alert("Game over. Team 2 wins");
     }
+  }
+
+  pauseGame() {
+    // Navigate to the PauseComponent and pass the current game state
+    this.router.navigate(['/pause'], {
+      state: { game: this.game }
+    });
   }
 }

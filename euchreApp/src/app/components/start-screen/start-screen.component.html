@@ -1,31 +1,52 @@
-<div>
-  <h2>Enter Player Names</h2>
-
-  <form [formGroup]="playerForm" (ngSubmit)="startGame()">
-    <div>
-      <label>Player 1:</label>
-      <input type="text" formControlName="player0" placeholder="Enter name for Player 1" />
-      <button type="button">Use Bot Player</button>
-      <br />
-    </div>
-    <div>
-      <label>Player 2:</label>
-      <input type="text" formControlName="player1" placeholder="Enter name for Player 2" />
-      <button type="button">Use Bot Player</button>
-      <br />
-    </div>
-    <div>
-      <label>Player 3:</label>
-      <input type="text" formControlName="player2" placeholder="Enter name for Player 3" />
-      <button type="button">Use Bot Player</button>
-      <br />
-    </div>
-    <div>
-      <label>Player 4:</label>
-      <input type="text" formControlName="player3" placeholder="Enter name for Player 4" />
-      <button type="button">Use Bot Player</button>
-      <br />
-    </div>
-    <button type="submit" [disabled]="!playerForm.valid">Start Game</button>
-  </form>
-</div>
+<body>
+  <div>
+    <h1> Euchre</h1>
+    <h2> By Lexemwellio</h2>
+  </div>
+  <div>
+    <h2>Create New Game</h2>
+    <form [formGroup]="playerForm" (ngSubmit)="startGame()">
+      <table>
+        <tr>
+          <!-- Row for Player 1 and Player 2 -->
+          <td>
+            <div class="player-entry">
+              <label for="player0">Player 1:</label>
+              <input type="text" id="player0" formControlName="player0" placeholder="Enter name for Player 1" />
+              <button type="button">Use Bot Player</button>
+            </div>
+          </td>
+          <td>
+            <div class="player-entry">
+              <label for="player1">Player 2:</label>
+              <input type="text" id="player1" formControlName="player1" placeholder="Enter name for Player 2" />
+              <button type="button">Use Bot Player</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <!-- Row for Player 3 and Player 4 -->
+          <td>
+            <div class="player-entry">
+              <label for="player2">Player 3:</label>
+              <input type="text" id="player2" formControlName="player2" placeholder="Enter name for Player 3" />
+              <button type="button">Use Bot Player</button>
+            </div>
+          </td>
+          <td>
+            <div class="player-entry">
+              <label for="player3">Player 4:</label>
+              <input type="text" id="player3" formControlName="player3" placeholder="Enter name for Player 4" />
+              <button type="button">Use Bot Player</button>
+            </div>
+          </td>
+        </tr>
+      </table>
+  
+      <button type="submit" [disabled]="!playerForm.valid">Start Game</button>
+    </form>
+  </div>
+  <h3>Or</h3>
+  <h3>Continue Previous Game</h3>
+  
+</body>  
