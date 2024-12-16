@@ -33,7 +33,7 @@ export interface Round {
   trumpSuit: Card["suit"] | null;
   trickCounter: number; //how many tricks have been completed. always <5 (first trick is 0)
   currentTrick: Trick; //state of current trick
-  previousTrick: Trick;
+  // previousTrick: Trick;
   tricksWon: [number, number]; //score within round, for teams 0 and 1
   tricksWonPlayer: [number, number, number, number];
   passTrumpCount: number; // number of players who passed on bidding trump
@@ -136,7 +136,6 @@ export class GameService {
       currentTrick,
       tricksWon: [0, 0],
       tricksWonPlayer: [0, 0, 0, 0],
-      previousTrick: currentTrick,
       passTrumpCount: 0,
       switchTime: true,
     };
@@ -160,7 +159,7 @@ export class GameService {
       currentRound: this.createRound(players, players[0]),
       score: [0, 0],
     };
-
+    console.log(":{")
     console.log(game);
     return game;
   }
@@ -319,7 +318,7 @@ export class GameService {
     console.log(`Team 2 Tricks: ${round.tricksWon[1]}`);
 
     //reset trick
-    round.previousTrick = round.currentTrick;
+    // round.previousTrick = round.currentTrick;
     round.currentTrick = this.createTrick(players[winningPlayerIndex]);
 
     round.trickCounter++;

@@ -1,1 +1,9 @@
-<p>pause works!</p>
+<body>
+    <h1>Paused</h1>
+    <div>
+        <button (click)="resumeGame()">Resume</button>
+        <button (click)="saveGame()">Save and Quit</button>
+        <button [routerLink]="['/']">Quit</button>
+    </div>
+
+</body>

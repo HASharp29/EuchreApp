@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { GameService, Game } from '../../services/game.service';
+import { GameService, Game, Player } from '../../services/game.service';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
@@ -14,7 +14,8 @@ import { StorageService } from '../../services/storage.service';
 })
 export class StartScreenComponent {
   game: Game | null = null;
-  
+  gameList: { gameId: string, timestamp: any, players: Player[] }[] | null = null;
+  selectedGameId: string | null = null; // To store the selected game ID
   fb = inject(FormBuilder);
   playerForm = this.fb.group({
     player0: ["", Validators.required],
@@ -29,6 +30,25 @@ export class StartScreenComponent {
     private router: Router,
   ) { }
 
+  ngOnInit(): void {
+    this.loadGames();
+  }
+
+  async loadGames() {
+    // Load all games using the StorageService
+    this.gameList = await this.storageService.getAllGames();
+    this.gameList = this.gameList.sort((a, b) => b.timestamp.toDate() - a.timestamp.toDate());
+  }
+
+  // Format the game display to show timestamp and player names
+  formatGameDisplay(game: { gameId: string, timestamp: any, players: Player[] }): string {
+    const date = game.timestamp.toDate();  // Convert Firestore Timestamp to JS Date
+    const dateString = date.toLocaleString(); // Format the date as a string
+    const playerNames = game.players.map(player => player.name).join(', '); // Get player names
+
+    return `${dateString}: ${playerNames}`;
+  }
+
   async startGame() {
 
     // Extract player names from the form
@@ -40,7 +60,7 @@ export class StartScreenComponent {
   ];
 
     console.log("submitted");
-    // this.game = this.gameService.initializeGame(playerNames);
+    this.game = this.gameService.initializeGame(playerNames);
     // console.log('Game initialized:', this.game);
 
     // if (this.game && true) {
@@ -53,11 +73,33 @@ export class StartScreenComponent {
     // // Navigate to the board after initializing the game
     // this.router.navigate(['/board']);
 
+    // Navigate to the board and pass the game object as state
+    this.router.navigate(['/board'], {
+      state: { game: this.game }
+    });
+  }
 
-  // Navigate to the board component with player names as query parameters
-  this.router.navigate(['/board'], {
-    queryParams: { players: JSON.stringify(playerNames) },
-  });
+  async continueGame() {
+    if (!this.selectedGameId) {
+      alert("Please select a game to continue.");
+      return;
+    }
+
+    try {
+      // Fetch the selected game data from the database
+      const game = await this.storageService.getGame(this.selectedGameId);
+
+      if (!game) {
+        alert("Failed to retrieve the selected game.");
+        return;
+      }
+      console.log(game);
+      // Navigate to the board screen and pass the game object as state
+      this.router.navigate(['/board'], { state: { game } });
+    } catch (error) {
+      console.error("Error continuing game:", error);
+      alert("An error occurred while loading the game. Please try again.");
+    }
   }
 }
 
