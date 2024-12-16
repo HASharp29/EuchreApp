@@ -3,13 +3,14 @@
   padding: 0;
 }
 
-/* body {
+body {
   display: flex;
-  background-color: orange;
+  /* background-color: orange; */
   height: 100%;
   width: 100%;
-  border: 2px solid
-} */
+  border: 2px solid;
+  position: relative;
+}
 
 /* html {
   background-color: green;
@@ -20,6 +21,39 @@
   display: flex;
 }
 
+.player-transition {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 75, 0);
+  z-index: 4;
+  border: orangered;
+}
+
+#overlay {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 128, 0, 0);
+  z-index: 2;
+  border: 2px solid blue;
+}
+
+.msgbox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 3em;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  border: 2px solid red;
+  background-color: rgba(0,128,0,0.5);
+}
 .game-table {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -32,6 +66,7 @@
   position: relative;
   float: left;
   background-color: green;
+  border: 3px solid orange;
 }
 
 .table-center {
@@ -159,8 +194,13 @@
 .temporary-button {
   margin: 1em;
   border: 1px solid;
+  height: 20%;
 }
 
 .tricks-won {
   display: inline;
+}
+
+.dent {
+  text-indent: 4em;
 }

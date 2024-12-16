@@ -19,7 +19,7 @@ export interface Trick {
   cardsPlayed: [Card | null, Card | null, Card | null, Card | null]; //cards played, index corresponds to player
   leadPlayer: Player | null; //player who played first card
   cardLed: Card | null; //card led
-  currentPlayer: Player;
+  currentPlayer: Player | null; // null type added for trump bid
   playedCounter: number;
 }
 
@@ -36,6 +36,8 @@ export interface Round {
   previousTrick: Trick;
   tricksWon: [number, number]; //score within round, for teams 0 and 1
   tricksWonPlayer: [number, number, number, number];
+  passTrumpCount: number; // number of players who passed on bidding trump
+  switchTime: boolean;  // determines if transition between players should pop up
 }
 
 // this interface keeps the state of the game
@@ -104,25 +106,39 @@ export class GameService {
     };
   }
 
+  // gets the trumpSuit and the caller for it
+  getTrump(leadPlayer: Player) {
+    const suit: Card['suit'] | null = null; // trumpSuit
+    const caller: Player = leadPlayer;  // start asking from leadPlayer
+ 
+    return { caller, suit };
+  }
+
   // creates new round, deal cards to players
   createRound(players: Player[], dealer: Player): Round {
     // distribute cards to hand and kitty
     const { hands, kittyCard } = this.dealCards();
 
-    const currentTrick = this.createTrick(players[(dealer.index + 1) % 4]);
+    const leadPlayer = players[(dealer.index + 1) % 4];
+
+    const {caller, suit} = this.getTrump(leadPlayer);
+
+    const currentTrick = this.createTrick(leadPlayer);
 
     return {
       hands,
       kittyCard,
       dealer, //input of function
-      caller: players[3],
+      caller: caller,
       outPlayer: null,
-      trumpSuit: "hearts",
+      trumpSuit: suit,
       trickCounter: 0,
       currentTrick,
       tricksWon: [0, 0],
       tricksWonPlayer: [0, 0, 0, 0],
       previousTrick: currentTrick,
+      passTrumpCount: 0,
+      switchTime: true,
     };
   }
 
@@ -148,7 +164,6 @@ export class GameService {
     console.log(game);
     return game;
   }
-
 
   //given a player index, determine which team they are on
   // team 0: players 0 and 2
@@ -250,6 +265,7 @@ export class GameService {
     trick.currentPlayer = game.players[(player.index + 1) % 4]
     playerHand.splice(cardToPlayIndex, 1);
     trick.playedCounter++;
+    round.switchTime = true;
   }
 
   //given a trick where all players have put down card, determine trick winner

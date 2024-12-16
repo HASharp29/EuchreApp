@@ -16,6 +16,7 @@ export class BoardComponent {
   activatedRoute = inject(ActivatedRoute);
   game: Game = this.gameService.initializeGame(['', '', '', '']); //game initialized with empty strings (will be reset later)
   gameOver: boolean = false;
+  tCandidates: ("hearts" | "diamonds" | "spades" | "clubs" | null)[] = ["hearts", "diamonds", "clubs", "spades"];
 
   constructor() {
     // Get player names from query parameters
@@ -31,6 +32,38 @@ export class BoardComponent {
       }
     });
   }
+  
+  bidTrump(bid: boolean): void {
+    if (bid) {
+      this.game.currentRound.trumpSuit = this.game.currentRound.kittyCard['suit'];
+      this.game.currentRound.caller = this.game.currentRound.currentTrick.currentPlayer;
+      this.game.currentRound.currentTrick.currentPlayer = this.game.currentRound.currentTrick.leadPlayer;
+      this.game.currentRound.switchTime = true;
+    } else {
+      this.game.currentRound.passTrumpCount++;
+      this.game.currentRound.currentTrick.currentPlayer = this.game.players[(this.game.currentRound.currentTrick.currentPlayer!.index + 1) % 4]
+      this.game.currentRound.switchTime = true;
+    }
+  }
+
+  getTcandidates(): ("hearts" | "diamonds" | "spades" | "clubs" | null)[] {
+    let notTrump = this.game.currentRound.kittyCard['suit'];
+    this.tCandidates = this.tCandidates.filter(item => item !== notTrump);
+
+    return this.tCandidates;
+  }
+
+  setTrump(suit: "hearts" | "diamonds" | "spades" | "clubs" | null) {
+    this.game.currentRound.trumpSuit = suit;
+    this.game.currentRound.caller = this.game.currentRound.currentTrick.currentPlayer;
+    this.game.currentRound.currentTrick.currentPlayer = this.game.currentRound.currentTrick.leadPlayer;
+    this.game.currentRound.switchTime = true;
+  }
+
+  nextPlayer() {
+    this.game.currentRound.switchTime = false;
+  }
+
   playCard(card: Card) {
     console.log(card.rank + card.suit);
     this.gameService.playCard(this.game, this.game.currentRound.currentTrick.currentPlayer!, card);
