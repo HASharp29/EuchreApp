@@ -41,7 +41,7 @@ export class StorageService {
       const roundDocRef = await addDoc(roundsCollection, {
         kittyCard: game.currentRound.kittyCard,
         dealer: game.currentRound.dealer,
-        caller: game.currentRound.caller|| null,
+        caller: game.currentRound.caller || null,
         outPlayer: game.currentRound.outPlayer || null,
         trumpSuit: game.currentRound.trumpSuit,
         trickCounter: game.currentRound.trickCounter,
@@ -69,7 +69,7 @@ export class StorageService {
               photo: card.photo,
             }
             : null
-        ),        
+        ),
         currentPlayer: game.currentRound.currentTrick.currentPlayer,
         playedCounter: game.currentRound.currentTrick.playedCounter,
 
@@ -103,35 +103,35 @@ export class StorageService {
     }
   }
 
-  async getGame(gameId: string): Promise<Game | null> {
-    try {
+  async getGame(gameId: string): Promise<void>/*Promise<Game | null>*/ {
+    /*try {
       // Reference the game document
       const gameDocRef = doc(this.firestore, `games/${gameId}`);
       const gameDoc = await getDoc(gameDocRef);
-  
+
       // Check if the game exists
       if (!gameDoc.exists()) {
         console.error(`Game with ID ${gameId} does not exist.`);
         return null;
       }
-  
+
       const gameData = gameDoc.data() as { roundCounter: number; score: [number, number] }; // Type-cast game data
-  
+
       // Retrieve players subcollection
       const playersCollection = collection(gameDocRef, 'players');
       const playersSnapshot = await getDocs(playersCollection);
       const players: Player[] = playersSnapshot.docs.map((playerDoc) => playerDoc.data() as Player);
-  
+
       // Retrieve round document (assuming only one round exists)
       const roundsCollection = collection(gameDocRef, 'rounds');
       const roundsSnapshot = await getDocs(roundsCollection);
       const roundDoc = roundsSnapshot.docs[0];
-  
+
       if (!roundDoc) {
         console.error('No round found for the game.');
         return null;
       }
-  
+
       const roundData = roundDoc.data() as {
         kittyCard: Card;
         dealer: Player;
@@ -142,7 +142,7 @@ export class StorageService {
         tricksWon: [number, number];
         tricksWonPlayer: [number, number, number, number];
       };
-      
+
       // Retrieve each player's hand from the subcollection
       const handsCollection = collection(roundDoc.ref, 'hands');
       const handsSnapshot = await getDocs(handsCollection);
@@ -169,18 +169,18 @@ export class StorageService {
       const tricksCollection = collection(roundDoc.ref, 'tricks');
       const tricksSnapshot = await getDocs(tricksCollection);
       const trickDoc = tricksSnapshot.docs[0];
-  
+
       if (!trickDoc) {
         console.error('No trick found for the round.');
         return null;
       }
-  
+
       const trickData = trickDoc.data();
-      
-      const cardsPlayed: [Card | null, Card | null, Card | null, Card | null] = trickData['cardsPlayed'].map((card: any, idx: number) => 
+
+      const cardsPlayed: [Card | null, Card | null, Card | null, Card | null] = trickData['cardsPlayed'].map((card: any, idx: number) =>
         card ? { suit: card.suit, rank: card.rank, photo: card.photo } : null
       ) as [Card | null, Card | null, Card | null, Card | null];
-  
+
       const currentTrick: Trick = {
         cardsPlayed,
         leadPlayer: trickData['leadPlayer'],
@@ -188,7 +188,7 @@ export class StorageService {
         currentPlayer: trickData['currentPlayer'],
         playedCounter: trickData['playedCounter'],
       };
-  
+
       // Build the Round object
       const currentRound: Round = {
         hands,
@@ -202,7 +202,7 @@ export class StorageService {
         tricksWon: roundData['tricksWon'],
         tricksWonPlayer: roundData['tricksWonPlayer'],
       };
-  
+
       // Build and return the Game object
       const game: Game = {
         players,
@@ -210,24 +210,24 @@ export class StorageService {
         currentRound,
         score: gameData['score'],
       };
-  
+
       return game;
-  
+
     } catch (error) {
       console.error('Error retrieving game:', error);
       return null;
-    }
+    }*/
   }
-  
+
 
   async getAllGames(): Promise<{ gameId: string, timestamp: any, players: Player[] }[]> {
     try {
       // Reference to the 'games' collection
       const gamesCollection = collection(this.firestore, 'games');
-      
+
       // Retrieve all game documents from Firestore
       const gamesSnapshot = await getDocs(gamesCollection);
-      
+
       const gamesList: { gameId: string, timestamp: any, players: Player[] }[] = [];
 
       // Iterate through all the games in the snapshot

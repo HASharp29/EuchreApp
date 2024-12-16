@@ -53,11 +53,11 @@ export class StartScreenComponent {
 
     // Extract player names from the form
     const playerNames: string[] = [
-    this.playerForm.get('player0')?.value || '',
-    this.playerForm.get('player1')?.value || '',
-    this.playerForm.get('player2')?.value || '',
-    this.playerForm.get('player3')?.value || '',
-  ];
+      this.playerForm.get('player0')?.value || '',
+      this.playerForm.get('player1')?.value || '',
+      this.playerForm.get('player2')?.value || '',
+      this.playerForm.get('player3')?.value || '',
+    ];
 
     console.log("submitted");
     this.game = this.gameService.initializeGame(playerNames);
@@ -79,7 +79,7 @@ export class StartScreenComponent {
     });
   }
 
-  async continueGame() {
+  /*async continueGame() {
     if (!this.selectedGameId) {
       alert("Please select a game to continue.");
       return;
@@ -100,7 +100,7 @@ export class StartScreenComponent {
       console.error("Error continuing game:", error);
       alert("An error occurred while loading the game. Please try again.");
     }
-  }
+  }*/
 }
 
 

@@ -1,105 +1,150 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* Ensure consistent box model */
+    box-sizing: border-box;
+    /* Ensure consistent box model */
     /* border: 1px solid black */
 }
 
 body {
-    background-color: green; /* Set background color */
-    text-align: center; /* Center text on the page */
-    padding: 20px; /* Add padding around the body */
+    background-color: green;
+    /* Set background color */
+    text-align: center;
+    /* Center text on the page */
+    padding: 20px;
+    /* Add padding around the body */
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 }
 
-h1, h2, h3, th {
-    color: #F0D1AB; /* Light tan color */
+h1,
+h2,
+h3,
+th {
+    color: #F0D1AB;
+    /* Light tan color */
 }
 
 div {
-    display: flex; /* Use flexbox for layout */
-    flex-direction: column; /* Stack elements vertically */
-    align-items: center; /* Center elements horizontally */
+    display: flex;
+    /* Use flexbox for layout */
+    flex-direction: column;
+    /* Stack elements vertically */
+    align-items: center;
+    /* Center elements horizontally */
     justify-content: center;
 }
 
-.new-game, .old-game {
-   margin: 2rem;
+.new-game,
+.old-game {
+    margin: 2rem;
 }
 
 .player-entry {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: .5rem; /* Space between label, input, and button */
+    gap: .5rem;
+    /* Space between label, input, and button */
     margin: 2rem;
 }
 
 label {
-    color: #F0D1AB; /* Match heading color */
+    color: #F0D1AB;
+    /* Match heading color */
     font-size: 1em;
 }
 
 input[type="text"] {
-    width: 12rem; /* Set a fixed width for textboxes */
-    padding: 10px; /* Add padding inside the textbox */
-    border: 1px solid black; /* Black border */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 1em; /* Adjust font size */
-    transition: box-shadow 0.3s ease; /* Smooth shadow transition */
+    width: 12rem;
+    /* Set a fixed width for textboxes */
+    padding: 10px;
+    /* Add padding inside the textbox */
+    border: 1px solid black;
+    /* Black border */
+    border-radius: 5px;
+    /* Rounded corners */
+    font-size: 1em;
+    /* Adjust font size */
+    transition: box-shadow 0.3s ease;
+    /* Smooth shadow transition */
 }
 
 input[type="text"]:focus {
-    outline: none; /* Remove default focus outline */
-    box-shadow: 0 0 5px #F0D1AB; /* Add a glow effect */
+    outline: none;
+    /* Remove default focus outline */
+    box-shadow: 0 0 5px #F0D1AB;
+    /* Add a glow effect */
 }
 
 button {
-    background-color: #F0D1AB; /* Light tan background */
-    color: black; /* Black text */
-    padding: 10px 20px; /* Padding around button */
-    border: 1px solid black; /* Black border */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 1em; /* Adjust font size */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s ease; /* Smooth background transition */
+    background-color: #F0D1AB;
+    /* Light tan background */
+    color: black;
+    /* Black text */
+    padding: 10px 20px;
+    /* Padding around button */
+    border: 1px solid black;
+    /* Black border */
+    border-radius: 5px;
+    /* Rounded corners */
+    font-size: 1em;
+    /* Adjust font size */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    transition: background-color 0.3s ease;
+    /* Smooth background transition */
 }
 
 button:hover {
-    background-color: tan; /* Slightly darker tan on hover */
+    background-color: tan;
+    /* Slightly darker tan on hover */
 }
 
 button:disabled {
-    background-color: gray; /* Gray background for disabled button */
-    cursor: not-allowed; /* Show disabled cursor */
+    background-color: gray;
+    /* Gray background for disabled button */
+    cursor: not-allowed;
+    /* Show disabled cursor */
 }
 
 select {
     width: 25rem;
-    padding: 10px; /* Add padding inside dropdown */
-    border: 1px solid black; /* Black border */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 1em; /* Adjust font size */
-    cursor: pointer; /* Pointer cursor */
-    transition: box-shadow 0.3s ease; /* Smooth shadow transition */
+    padding: 10px;
+    /* Add padding inside dropdown */
+    border: 1px solid black;
+    /* Black border */
+    border-radius: 5px;
+    /* Rounded corners */
+    font-size: 1em;
+    /* Adjust font size */
+    cursor: pointer;
+    /* Pointer cursor */
+    transition: box-shadow 0.3s ease;
+    /* Smooth shadow transition */
     margin: 1rem
 }
 
 select:focus {
-    outline: none; /* Remove default focus outline */
-    box-shadow: 0 0 5px #F0D1AB; /* Add a glow effect */
+    outline: none;
+    /* Remove default focus outline */
+    box-shadow: 0 0 5px #F0D1AB;
+    /* Add a glow effect */
 }
 
 form {
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: center; /* Center form elements */
-    gap: 20px; /* Add spacing between form elements */
+    flex-direction: column;
+    /* Stack elements vertically */
+    align-items: center;
+    /* Center form elements */
+    gap: 20px;
+    /* Add spacing between form elements */
 }
 
 form table td {
-    text-align: center; /* Center text in table cells */
+    text-align: center;
+    /* Center text in table cells */
 }

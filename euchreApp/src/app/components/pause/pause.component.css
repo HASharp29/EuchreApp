@@ -1,39 +1,48 @@
 body {
-    background-color: green; /* Set background to burlywood */
-    text-align: center; /* Centers text on the page */
-    padding: 20px; /* Adds padding around the body */
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: column;
+  background-color: green;
+  ;
+  /* Set background to burlywood */
+  text-align: center;
+  /* Centers text on the page */
+  padding: 20px;
+  /* Adds padding around the body */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
 }
 
-  
+
 h1 {
-    margin-top: 10rem;
-    color: #F0D1AB; 
+  margin-top: 10rem;
+  color: #F0D1AB;
 }
-  
-  div {
-    display: flex; /* Use flexbox for button layout */
-    flex-direction: column; /* Stack buttons vertically */
-    gap: 15px; /* Adds space between buttons */
-    align-items: center; /* Center buttons horizontally */
-    justify-content: center;
+
+div {
+  display: flex;
+  /* Use flexbox for button layout */
+  flex-direction: column;
+  /* Stack buttons vertically */
+  gap: 15px;
+  /* Adds space between buttons */
+  align-items: center;
+  /* Center buttons horizontally */
+  justify-content: center;
 }
-  
-  button {
-    background-color: #F0D1AB; 
-    color: black; 
-    padding: 10px 20px; 
-    border: 1px solid black;
-    border-radius: 5px; 
-    font-size: 1em; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease; /* Smooth background transition */
-  }
-  
-  button:hover {
-    background-color: tan; /* Darker green on hover */
-  }
-  
+
+button {
+  background-color: #F0D1AB;
+  color: black;
+  padding: 10px 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  /* Smooth background transition */
+}
+
+button:hover {
+  background-color: tan;
+  /* Darker green on hover */
+}

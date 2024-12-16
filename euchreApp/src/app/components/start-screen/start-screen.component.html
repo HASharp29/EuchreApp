@@ -50,8 +50,8 @@
           </tr>
         </tbody>
       </table>
-      
-  
+
+
       <button type="submit" [disabled]="!playerForm.valid">Start Game</button>
     </form>
   </div>
@@ -63,11 +63,12 @@
 
     <select [(ngModel)]="selectedGameId">
       @for(game of this.gameList; track game.timestamp) {
-        <option [value] = game.gameId>
-          {{ formatGameDisplay(game) }}
-        </option>
+      <option [value]=game.gameId>
+        {{ formatGameDisplay(game) }}
+      </option>
       }
     </select>
-  <button type="button" (click)="continueGame()" [disabled]="!selectedGameId">Continue Game</button>  </div>
-  
-</body>  
+    <button type="button" [disabled]="!selectedGameId">Continue Game</button>
+  </div>
+
+</body>
