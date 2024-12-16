@@ -14,8 +14,8 @@ import { StorageService } from '../../services/storage.service';
 })
 export class StartScreenComponent {
   game: Game | null = null;
-  gameList: { gameId: string, timestamp: any, players: Player[] } | null = null;
-  
+  gameList: { gameId: string, timestamp: any, players: Player[] }[] | null = null;
+  selectedGameId: string | null = null; // To store the selected game ID
   fb = inject(FormBuilder);
   playerForm = this.fb.group({
     player0: ["", Validators.required],
@@ -36,7 +36,8 @@ export class StartScreenComponent {
 
   async loadGames() {
     // Load all games using the StorageService
-    // this.gameList = await this.storageService.getAllGames();
+    this.gameList = await this.storageService.getAllGames();
+    this.gameList = this.gameList.sort((a, b) => b.timestamp.toDate() - a.timestamp.toDate());
   }
 
   // Format the game display to show timestamp and player names
@@ -45,7 +46,7 @@ export class StartScreenComponent {
     const dateString = date.toLocaleString(); // Format the date as a string
     const playerNames = game.players.map(player => player.name).join(', '); // Get player names
 
-    return `${dateString} - ${playerNames}`;
+    return `${dateString}: ${playerNames}`;
   }
 
   async startGame() {
@@ -76,6 +77,29 @@ export class StartScreenComponent {
     this.router.navigate(['/board'], {
       state: { game: this.game }
     });
+  }
+
+  async continueGame() {
+    if (!this.selectedGameId) {
+      alert("Please select a game to continue.");
+      return;
+    }
+
+    try {
+      // Fetch the selected game data from the database
+      const game = await this.storageService.getGame(this.selectedGameId);
+
+      if (!game) {
+        alert("Failed to retrieve the selected game.");
+        return;
+      }
+      console.log(game);
+      // Navigate to the board screen and pass the game object as state
+      this.router.navigate(['/board'], { state: { game } });
+    } catch (error) {
+      console.error("Error continuing game:", error);
+      alert("An error occurred while loading the game. Please try again.");
+    }
   }
 }
 

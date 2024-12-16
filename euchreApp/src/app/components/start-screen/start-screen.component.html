@@ -1,52 +1,73 @@
 <body>
   <div>
-    <h1> Euchre</h1>
-    <h2> By Lexemwellio</h2>
+    <h1> Euchre, by Lexemwellio</h1>
   </div>
-  <div>
-    <h2>Create New Game</h2>
+  <div class="new-game">
+    <h3>Create New Game</h3>
     <form [formGroup]="playerForm" (ngSubmit)="startGame()">
       <table>
-        <tr>
-          <!-- Row for Player 1 and Player 2 -->
-          <td>
-            <div class="player-entry">
-              <label for="player0">Player 1:</label>
-              <input type="text" id="player0" formControlName="player0" placeholder="Enter name for Player 1" />
-              <button type="button">Use Bot Player</button>
-            </div>
-          </td>
-          <td>
-            <div class="player-entry">
-              <label for="player1">Player 2:</label>
-              <input type="text" id="player1" formControlName="player1" placeholder="Enter name for Player 2" />
-              <button type="button">Use Bot Player</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <!-- Row for Player 3 and Player 4 -->
-          <td>
-            <div class="player-entry">
-              <label for="player2">Player 3:</label>
-              <input type="text" id="player2" formControlName="player2" placeholder="Enter name for Player 3" />
-              <button type="button">Use Bot Player</button>
-            </div>
-          </td>
-          <td>
-            <div class="player-entry">
-              <label for="player3">Player 4:</label>
-              <input type="text" id="player3" formControlName="player3" placeholder="Enter name for Player 4" />
-              <button type="button">Use Bot Player</button>
-            </div>
-          </td>
-        </tr>
+
+        <tbody>
+          <tr>
+            <th colspan="1">Team 1</th>
+            <th colspan="1">Team 2</th>
+          </tr>
+          <tr>
+            <!-- Player 1 (Team 1, Row 1) -->
+            <td>
+              <div class="player-entry">
+                <label for="player0">Player 1:</label>
+                <input type="text" id="player0" formControlName="player0" placeholder="Enter name for Player 1" />
+                <button type="button">Use Bot Player</button>
+              </div>
+            </td>
+            <!-- Player 2 (Team 2, Row 1) -->
+            <td>
+              <div class="player-entry">
+                <label for="player1">Player 2:</label>
+                <input type="text" id="player1" formControlName="player1" placeholder="Enter name for Player 2" />
+                <button type="button">Use Bot Player</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <!-- Player 3 (Team 1, Row 2) -->
+            <td>
+              <div class="player-entry">
+                <label for="player2">Player 3:</label>
+                <input type="text" id="player2" formControlName="player2" placeholder="Enter name for Player 3" />
+                <button type="button">Use Bot Player</button>
+              </div>
+            </td>
+            <!-- Player 4 (Team 2, Row 2) -->
+            <td>
+              <div class="player-entry">
+                <label for="player3">Player 4:</label>
+                <input type="text" id="player3" formControlName="player3" placeholder="Enter name for Player 4" />
+                <button type="button">Use Bot Player</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
       </table>
+      
   
       <button type="submit" [disabled]="!playerForm.valid">Start Game</button>
     </form>
   </div>
+
   <h3>Or</h3>
-  <h3>Continue Previous Game</h3>
+
+  <div class="old-game">
+    <h3>Continue Previous Game</h3>
+
+    <select [(ngModel)]="selectedGameId">
+      @for(game of this.gameList; track game.timestamp) {
+        <option [value] = game.gameId>
+          {{ formatGameDisplay(game) }}
+        </option>
+      }
+    </select>
+  <button type="button" (click)="continueGame()" [disabled]="!selectedGameId">Continue Game</button>  </div>
   
 </body>  
