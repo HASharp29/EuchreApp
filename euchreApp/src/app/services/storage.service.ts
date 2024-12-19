@@ -150,6 +150,7 @@ export class StorageService {
         return {
           name: playerData['name'],
           index: playerData['index'],
+          isBot: playerData['isBot'],
         };
       });
       game.players = players;
@@ -185,6 +186,7 @@ export class StorageService {
         leadPlayer:  {
               name: trickData['leadPlayer']['name'],
               index: trickData['leadPlayer']['index'],
+              isBot: trickData['leadPlayer']['isBot'],
             },
         cardLed: trickData['cardLed']
           ? {
@@ -196,6 +198,7 @@ export class StorageService {
         currentPlayer: {
               name: trickData['currentPlayer']['name'],
               index: trickData['currentPlayer']['index'],
+              isBot: trickData['currentPlayer']['index'],
             },
         playedCounter: trickData['playedCounter'],
       };
@@ -226,17 +229,20 @@ export class StorageService {
         dealer: {
           name: roundData['dealer']['name'],
           index: roundData['dealer']['index'],
+          isBot: roundData['dealer']['index'],
         },
         caller: roundData['caller']
           ? {
               name: roundData['caller']['name'],
               index: roundData['caller']['index'],
+              isBot: roundData['dealer']['index'],
             }
           : null,
         outPlayer: roundData['outPlayer']
           ? {
               name: roundData['outPlayer']['name'],
               index: roundData['outPlayer']['index'],
+              isBot: roundData['dealer']['index'],
             }
           : null,
         trumpSuit: roundData['trumpSuit'],

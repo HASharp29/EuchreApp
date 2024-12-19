@@ -37,6 +37,10 @@ export class StartScreenComponent {
     this.loadGames();
   }
 
+  useBot() {
+    
+  }
+
   async loadGames() {
     // Load all games using the StorageService
     this.gameList = await this.storageService.getAllGames();

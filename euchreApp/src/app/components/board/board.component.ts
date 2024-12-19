@@ -5,6 +5,7 @@ import { StorageService } from '../../services/storage.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
+import { BotService } from '../../services/bot.service';
 
 @Component({
   selector: 'app-board',
@@ -16,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 
 export class BoardComponent {
   gameService = inject(GameService);
+  bot = inject(BotService);
   activatedRoute = inject(ActivatedRoute);
   game: Game = this.gameService.initializeGame(['', '', '', '']); //game initialized with empty strings (will be reset later)
   gameOver: boolean = false;
@@ -78,6 +80,10 @@ export class BoardComponent {
 
   nextPlayer() {
     this.game.currentRound.switchTime = false;
+    if (this.game.currentRound.currentTrick.currentPlayer.isBot){
+      const bcard = this.bot.pickCard(this.game);
+      this.playCard(bcard);
+    }
   }
 
   playCard(card: Card) {

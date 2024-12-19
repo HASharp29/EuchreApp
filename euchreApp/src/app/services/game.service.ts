@@ -12,6 +12,7 @@ export interface Card {
 export interface Player {
   name: string;
   index: number;
+  isBot: boolean;
 }
 
 // this interface keeps track of the cards played in a trick and who led the trick and with what
@@ -33,7 +34,6 @@ export interface Round {
   trumpSuit: Card["suit"] | null;
   trickCounter: number; //how many tricks have been completed. always <5 (first trick is 0)
   currentTrick: Trick; //state of current trick
-  // previousTrick: Trick;
   tricksWon: [number, number]; //score within round, for teams 0 and 1
   tricksWonPlayer: [number, number, number, number];
   passTrumpCount: number; // number of players who passed on bidding trump
@@ -61,6 +61,7 @@ export class GameService {
     const ranks: Card["rank"][] = ["9", "10", "J", "Q", "K", "A"];
     const deck: Card[] = [];
 
+    
     for (const suit of suits) {
       for (const rank of ranks) {
         deck.push({ suit, rank, photo: `${suit}_${rank}.png` });
@@ -326,7 +327,6 @@ export class GameService {
 
   //update score, reset round
   scoreRound(game: Game): number {
-    console.log("ESJLUHFESLHUSFE:HUSFE:U:IE");
     const round = game.currentRound;
 
     if (round.trickCounter < 5) {
