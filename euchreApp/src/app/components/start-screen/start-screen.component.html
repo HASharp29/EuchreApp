@@ -71,20 +71,21 @@
     <button type="button" (click)="continueGame()" [disabled]="!selectedGameId">Continue Game</button>
   </div>
 
-  <!-- <div class="old-game">
+  <div class="old-game">
     <h3>Continue Previous Game</h3>
     <mat-form-field>
       <mat-label>Game</mat-label>
       <mat-select [(ngModel)]="selectedGameId">
         @for ( game of this.gameList; track game.timestamp) {
-          <mat-option [value]="game.gameId">
-            {{ formatGameDisplay(game) }}
-          </mat-option>
+        <mat-option [value]="game.gameId">
+          {{ formatGameDisplay(game) }}
+        </mat-option>
         }
       </mat-select>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="continueGame()" [disabled]="!selectedGameId">Continue Game</button>
-  </div> -->
+    <button mat-raised-button color="primary" (click)="continueGame()" [disabled]="!selectedGameId">Continue
+      Game</button>
+  </div>
 
 </body>

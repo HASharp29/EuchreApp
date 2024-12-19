@@ -4,10 +4,11 @@ import { RouterLink, Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgClass } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-board',
-  imports: [RouterLink, NgClass],
+  imports: [RouterLink, NgClass, MatCardModule],
   standalone: true,
   templateUrl: './board.component.html',
   styleUrl: './board.component.css'
@@ -20,6 +21,7 @@ export class BoardComponent {
   gameOver: boolean = false;
   trumpBid: boolean = false;
   tCandidates: ("hearts" | "diamonds" | "spades" | "clubs" | null)[] = ["hearts", "diamonds", "clubs", "spades"];
+  winner: "1" | "2" | null = null;
 
   constructor(private router: Router) {
     // Access the state object from the router
@@ -100,9 +102,11 @@ export class BoardComponent {
     const winningTeam = this.gameService.scoreRound(this.game);
     if (winningTeam === 0) {
       this.gameOver = true;
+      this.winner = "1";
     }
     else if (winningTeam === 1) {
       this.gameOver = true;
+      this.winner = "2";
     }
   }
 

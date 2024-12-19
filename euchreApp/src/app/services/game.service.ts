@@ -354,10 +354,10 @@ export class GameService {
       game.score[(winningTeam + 1) % 2] += 2;
       console.log(`Team ${winningTeam} euchred Team ${(winningTeam + 1) % 2}, winning ${tricksWon} tricks. Team ${winningTeam} gets 2 points.`)
     }
-    if (game.score[0] >= 2) {
+    if (game.score[0] >= 3) {
       return 0;
     }
-    else if (game.score[1] >= 2) {
+    else if (game.score[1] >= 3) {
       return 1;
     }
 
