@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { NamesValid } from '../../validators/names-valid.validator';
 
 @Component({
   selector: 'app-game',
@@ -20,12 +21,12 @@ export class StartScreenComponent {
   gameList: { gameId: string, timestamp: any, players: Player[] }[] | null = null;
   selectedGameId: string | null = null; // To store the selected game ID
   fb = inject(FormBuilder);
-  playerForm = this.fb.group({
-    player0: ["", Validators.required],
+  playerForm = this.fb.group({ // We are aware that this is deprecated.
+    player0: ["", Validators.required,],
     player1: ["", Validators.required],
     player2: ["", Validators.required],
     player3: ["", Validators.required],
-  })
+  }, { validator: NamesValid })
 
   constructor(
     private gameService: GameService,
