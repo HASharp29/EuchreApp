@@ -326,7 +326,6 @@ export class GameService {
 
   //update score, reset round
   scoreRound(game: Game): number {
-    console.log("ESJLUHFESLHUSFE:HUSFE:U:IE");
     const round = game.currentRound;
 
     if (round.trickCounter < 5) {

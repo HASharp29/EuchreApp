@@ -21,8 +21,9 @@
       @if (game.currentRound.passTrumpCount < 4) { <p>Should {{game.currentRound.kittyCard['suit']}} be trump?</p>
         <img src="photos/deck/{{game.currentRound.kittyCard.photo}}" class="kitty-card">
         <div class="bid-trump-buttons">
-          <button (click)="bidTrump(true)">Yes</button>
-          <button (click)="bidTrump(false)">Pass</button>
+          <button class="set-button" (click)="bidTrump(true)">Yes</button>
+          
+          <button class="set-button" (click)="bidTrump(false)">Pass</button>
         </div>
         }
         @if (game.currentRound.passTrumpCount > 3) {
