@@ -19,6 +19,7 @@ export class BoardComponent {
   game: Game = this.gameService.initializeGame(['', '', '', '']); //game initialized with empty strings (will be reset later)
   gameOver: boolean = false;
   tCandidates: ("hearts" | "diamonds" | "spades" | "clubs" | null)[] = ["hearts", "diamonds", "clubs", "spades"];
+  winner: "1" | "2" | null = null;
 
   constructor(private router: Router) {
     // Access the state object from the router
@@ -88,9 +89,11 @@ export class BoardComponent {
     const winningTeam = this.gameService.scoreRound(this.game);
     if (winningTeam === 0) {
       this.gameOver = true;
+      this.winner = "1";
     }
     else if (winningTeam === 1) {
       this.gameOver = true;
+      this.winner = "2";
     }
   }
 

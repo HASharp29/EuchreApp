@@ -1,7 +1,6 @@
 <div class="topbar">
+  @if(gameOver === false) {
   <button (click)="pauseGame()">Pause</button>
-  @if(gameOver === true) {
-  <button class="temporary-button" [routerLink]="['/']">Play Again</button>
   }
 </div>
 
@@ -11,6 +10,14 @@
     <h2>It's {{game.currentRound.currentTrick.currentPlayer!.name}}'s turn!</h2>
     <button (click)="nextPlayer()">Ok</button>
   </div>
+  }
+  @if(gameOver === true) {
+    <div class="player-transition">
+      <h2>Game Over!</h2>
+      <p>The winner is Team {{this.winner}}!</p>
+      <p></p>
+      <button class="again-button" [routerLink]="['/']">Play Again</button>
+    </div>
   }
 
   @if(game.currentRound.trumpSuit == null) {
@@ -112,9 +119,5 @@
     <p class="dent">Team 2: {{game.currentRound.tricksWon[1]}}</p>
     <p>It is {{ game.currentRound.currentTrick.currentPlayer!.name }}'s turn</p>
   </div>
-
-  @if(gameOver === true) {
-  <button class="temporary-button" [routerLink]="['/']">Play Again</button>
-  }
 
 </body>
