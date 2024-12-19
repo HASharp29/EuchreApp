@@ -106,6 +106,7 @@ export class BoardComponent {
 
   scoreRound() {
     const winningTeam = this.gameService.scoreRound(this.game);
+    this.trumpBid = false;
     if (winningTeam === 0) {
       this.gameOver = true;
       this.winner = "1";

@@ -120,7 +120,6 @@ export class StorageService {
     }
   }
 
-
   async getGame(gameId: string): Promise<Game | null> {
     try {
       // Reference the game document
@@ -253,7 +252,7 @@ export class StorageService {
         passTrumpCount: roundData['passTrumpCount'],
         switchTime: roundData['switchTime'],
       };
-
+  
       // Delete all related documents and collections
       await Promise.all(playersSnap.docs.map((docSnap) => deleteDoc(docSnap.ref))); // Delete all players
       await Promise.all(
@@ -262,26 +261,28 @@ export class StorageService {
           const tricksCollection = collection(roundDoc.ref, 'tricks');
           const tricksSnap = await getDocs(tricksCollection);
           await Promise.all(tricksSnap.docs.map((docSnap) => deleteDoc(docSnap.ref)));
-
+  
           // Delete hands subcollection
           const handsCollection = collection(roundDoc.ref, 'hands');
           const handsSnap = await getDocs(handsCollection);
           await Promise.all(handsSnap.docs.map((docSnap) => deleteDoc(docSnap.ref)));
-
+  
           // Delete the round document itself
           await deleteDoc(roundDoc.ref);
         })
       );
-      
   
-      console.log('Game loaded successfully.');
+      // Finally, delete the main game document
+      await deleteDoc(gameDocRef);
+  
+      console.log('Game and all related documents deleted successfully.');
       return game;
     } catch (error) {
-      console.error('Error loading game:', error);
+      console.error('Error loading and deleting game:', error);
       throw error;
     }
   }
-
+  
   
   async getAllGames(): Promise<{ gameId: string, timestamp: any, players: Player[] }[]> {
     try {

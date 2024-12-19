@@ -26,8 +26,6 @@ body {
   justify-content: start;
   align-items: center;
   z-index: 1000;
-  border: 1px solid blue;
-  /* Ensure it stays above other elements */
 }
 
 .player-transition {
@@ -55,7 +53,6 @@ body {
   height: 100%;
   background-color: rgba(0, 128, 0, 0);
   z-index: 2;
-  border: 2px solid blue;
 }
 
 .kitty-card {
@@ -75,28 +72,25 @@ body {
   border-radius: 10px;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
-  border: 2px solid rgba(0, 128, 0, 0.5);
+  border: 2px solid #e5a11e;
   background-color: #775b35;
-  border-color: #e5a11e;
 }
 
 .msgbox * {
   margin: 0.1em;
 }
 
-.bid-trump-buttons {
-  display: flex;
-}
-
-.choose-trump-buttons {
+.bid-trump-buttons, .choose-trump-buttons {
   display: flex;
 }
 
 .set-button {
-  height: 1.5em;
-  width: 4.5em;
-  margin: 0 auto;
+  height: 3rem;
+  width: 10rem;
   vertical-align: middle;
+  font-size: 2rem;
+  text-align: center;
+  padding: 0px 0px;
 }
 
 .game-table {
@@ -188,7 +182,6 @@ body {
   flex-direction: column;
   width: 7rem;
   height:80%;
-  border:1px solid purple;
 }
 
 .tricks-won.left {
@@ -258,7 +251,7 @@ body {
 .game-stats {
   float: right;
   display: block;
-  border: 1px solid;
+  border: 2px solid #e5a11e;
   border-radius: 10px;
   background-color: #f0d1ab;
   margin: 1rem;
@@ -269,24 +262,14 @@ body {
   padding: 1em;
 }
 
-.dent {
-  text-indent: 2em;
-}
-
-.again-button {
-  margin: 1em;
-  border: 1px solid;
-  height: auto;
-}
-
 button {
   background-color: #F0D1AB;
   margin: 0px;
   color: black;
   padding: 10px 20px;
-  border: 1px solid black;
+  border: 2px solid #e5a11e;
   border-radius: 5px;
-  font-size: 1em;
+  font-size: 1.5rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-family: 'Times New Roman', Times, serif

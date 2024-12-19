@@ -14,7 +14,7 @@ export class PauseComponent {
   game: Game | null = null;
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private storageService: StorageService,
   ) {
     // Access the state object from the router
@@ -29,8 +29,8 @@ export class PauseComponent {
       this.router.navigate(['/']);
     }
 
-    
-  } 
+
+  }
 
   async saveGame() {
     // Save the game to Firestore
@@ -39,10 +39,15 @@ export class PauseComponent {
     this.router.navigate(['/']);
   }
 
-resumeGame() {
+  resumeGame() {
     // Navigate back to the board and pass the game object back as state
     this.router.navigate(['/board'], {
       state: { game: this.game }
     });
+  }
+
+  async goToExternalLink() {
+    await this.storageService.saveGame(this.game!);
+    window.location.href = "https://cs.calvin.edu/courses/cs/336/pizza/pages/Lexemwellio-Pizza-Company/lexemwellio.html";
   }
 }

@@ -32,17 +32,26 @@ div {
 
 button {
   background-color: #F0D1AB;
+  margin: 0px;
   color: black;
   padding: 10px 20px;
-  border: 1px solid black;
+  border: 2px solid #e5a11e;
   border-radius: 5px;
-  font-size: 1em;
+  font-size: 1.5rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  /* Smooth background transition */
+  font-family: 'Times New Roman', Times, serif
+    /* Smooth background transition */
+
 }
 
 button:hover {
   background-color: tan;
   /* Darker green on hover */
+}
+
+#reassurance {
+  position: fixed;
+  bottom: 0;
+  color: #F0D1AB;
 }
