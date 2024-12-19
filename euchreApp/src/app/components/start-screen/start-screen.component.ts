@@ -3,16 +3,17 @@ import { GameService, Game, Player } from '../../services/game.service';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
-import {MatFormFieldModule} from '@angular/material/form-field'; 
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-game',
   standalone: true,
   templateUrl: './start-screen.component.html',
   styleUrls: ['./start-screen.component.css'],
-  imports: [FormsModule, RouterLink, ReactiveFormsModule, MatFormFieldModule, MatSelectModule, MatOptionModule],
+  imports: [FormsModule, RouterLink, ReactiveFormsModule, MatFormFieldModule, MatSelectModule, MatOptionModule, MatButtonModule],
 })
 export class StartScreenComponent {
   game: Game | null = null;

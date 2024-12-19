@@ -4,10 +4,11 @@ import { RouterLink, Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgClass } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-board',
-  imports: [RouterLink, NgClass],
+  imports: [RouterLink, NgClass, MatCardModule],
   standalone: true,
   templateUrl: './board.component.html',
   styleUrl: './board.component.css'
