@@ -78,17 +78,17 @@ input[type="text"]:focus {
 
 
 button {
-  background-color: #F0D1AB;
-  margin: 0px;
-  color: black;
-  padding: 10px 20px;
-  border: 2px solid #e5a11e;
-  border-radius: 5px;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-family: 'Times New Roman', Times, serif
-    /* Smooth background transition */
+    background-color: #F0D1AB;
+    margin: 0px;
+    color: black;
+    padding: 10px 20px;
+    border: 2px solid #e5a11e;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Times New Roman', Times, serif
+        /* Smooth background transition */
 }
 
 button:hover {
@@ -140,4 +140,8 @@ form {
 form table td {
     text-align: center;
     /* Center text in table cells */
+}
+
+.game-container {
+    display: inline-block;
 }
