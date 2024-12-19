@@ -12,12 +12,12 @@
   </div>
   }
   @if(gameOver === true) {
-    <div class="player-transition">
-      <h2>Game Over!</h2>
-      <p>The winner is Team {{this.winner}}!</p>
-      <p></p>
-      <button class="again-button" [routerLink]="['/']">Play Again</button>
-    </div>
+  <div class="player-transition">
+    <h2>Game Over!</h2>
+    <p>The winner is Team {{this.winner}}!</p>
+    <p></p>
+    <button class="again-button" [routerLink]="['/']">Play Again</button>
+  </div>
   }
 
   @if(this.trumpBid === false) {
@@ -29,7 +29,7 @@
         <img src="photos/deck/{{game.currentRound.kittyCard.photo}}" class="kitty-card">
         <div class="bid-trump-buttons">
           <button class="set-button" (click)="bidTrump(true)">Yes</button>
-          
+
           <button class="set-button" (click)="bidTrump(false)">Pass</button>
         </div>
         }

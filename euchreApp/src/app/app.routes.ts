@@ -6,7 +6,7 @@ import { PauseComponent } from './components/pause/pause.component';
 export const routes: Routes = [
   { path: '', component: StartScreenComponent },
   { path: 'board', component: BoardComponent },
-  { path: 'pause', component: PauseComponent},
+  { path: 'pause', component: PauseComponent },
 
-  { path: '**', redirectTo: 'board'},
+  { path: '**', redirectTo: 'board' },
 ];

@@ -44,7 +44,14 @@ button {
     /* Smooth background transition */
 
 }
+
 button:hover {
   background-color: tan;
   /* Darker green on hover */
+}
+
+#reassurance {
+  position: fixed;
+  bottom: 0;
+  color: #F0D1AB;
 }
