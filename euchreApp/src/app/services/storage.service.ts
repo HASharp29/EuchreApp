@@ -71,8 +71,8 @@ export class StorageService {
       const tricksCollection = collection(roundDocRef, 'tricks');
       await addDoc(tricksCollection, {
         leadPlayer: {
-              name: game.currentRound.currentTrick.leadPlayer.name,
-              index: game.currentRound.currentTrick.leadPlayer.index,
+              name: game.currentRound.currentTrick.leadPlayer!.name,
+              index: game.currentRound.currentTrick.leadPlayer!.index,
             },
         cardLed: game.currentRound.currentTrick.cardLed
           ? {
@@ -91,8 +91,8 @@ export class StorageService {
             : null
         ),
         currentPlayer: {
-              name: game.currentRound.currentTrick.currentPlayer.name,
-              index: game.currentRound.currentTrick.currentPlayer.index,
+              name: game.currentRound.currentTrick.currentPlayer!.name,
+              index: game.currentRound.currentTrick.currentPlayer!.index,
             },
         playedCounter: game.currentRound.currentTrick.playedCounter,
       });
@@ -139,6 +139,7 @@ export class StorageService {
         roundCounter: gameData['roundCounter'],
         score: gameData['score'],
         currentRound: {} as Round, // Placeholder for now
+        //winner: gameData['winner'], // added by EJW
       };
   
       // Fetch players subcollection
