@@ -127,11 +127,13 @@
     <mat-card-content class="dent">Team 2: {{game.score[1]}}</mat-card-content>
     <mat-card-title>Round:</mat-card-title>
     <mat-card-content>Dealer: {{game.currentRound.dealer.name}}</mat-card-content>
-    <mat-card-content>Trump suit: {{game.currentRound.trumpSuit}} called by
-      {{game.currentRound.caller!.name}}</mat-card-content>
+    <mat-card-content>
+      Trump Suit: {{game.currentRound.caller!.name}} called {{game.currentRound.trumpSuit}}
+    </mat-card-content>
     @if(game.currentRound.currentTrick.cardLed !== null){
-    <mat-card-content>Led suit: {{game.currentRound.currentTrick.cardLed.suit}} led by
-      {{game.currentRound.currentTrick.leadPlayer!.name}}</mat-card-content>
+    <mat-card-content>
+      Lead Suit: {{game.currentRound.currentTrick.leadPlayer!.name}} led {{game.currentRound.currentTrick.cardLed.suit}}
+    </mat-card-content>
     }
     <mat-card-title>Tricks Won:</mat-card-title>
     <mat-card-content class="dent">Team 1: {{game.currentRound.tricksWon[0]}}</mat-card-content>

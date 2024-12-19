@@ -58,18 +58,15 @@ label {
 }
 
 input[type="text"] {
-    width: 12rem;
-    /* Set a fixed width for textboxes */
-    padding: 10px;
-    /* Add padding inside the textbox */
-    border: 1px solid black;
-    /* Black border */
+    margin: 0px;
+    color: black;
+    padding: 10px 20px;
+    border: 2px solid #e5a11e;
     border-radius: 5px;
-    /* Rounded corners */
-    font-size: 1em;
-    /* Adjust font size */
-    transition: box-shadow 0.3s ease;
-    /* Smooth shadow transition */
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Times New Roman', Times, serif
 }
 
 input[type="text"]:focus {
@@ -79,22 +76,18 @@ input[type="text"]:focus {
     /* Add a glow effect */
 }
 
+
 button {
-    background-color: #F0D1AB;
-    /* Light tan background */
-    color: black;
-    /* Black text */
-    padding: 10px 20px;
-    /* Padding around button */
-    border: 1px solid black;
-    /* Black border */
-    border-radius: 5px;
-    /* Rounded corners */
-    font-size: 1em;
-    /* Adjust font size */
-    cursor: pointer;
-    /* Pointer cursor on hover */
-    transition: background-color 0.3s ease;
+  background-color: #F0D1AB;
+  margin: 0px;
+  color: black;
+  padding: 10px 20px;
+  border: 2px solid #e5a11e;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Times New Roman', Times, serif
     /* Smooth background transition */
 }
 
@@ -104,7 +97,7 @@ button:hover {
 }
 
 button:disabled {
-    background-color: gray;
+    background-color: #775b35;
     /* Gray background for disabled button */
     cursor: not-allowed;
     /* Show disabled cursor */
