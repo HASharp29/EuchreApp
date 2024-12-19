@@ -5,6 +5,10 @@
         <button (click)="saveGame()">Save and Quit</button>
         <button [routerLink]="['/']">Quit</button>
         <button (click)="goToExternalLink()">Pizza time!</button>
-        <h2 id="reassurance">Don't worry! Your game will be automatically saved if you order pizza!</h2>
+        <div id="reassurance">
+            <h2>Don't worry! Your game will be automatically saved if you order pizza!</h2>
+            <p>Disclaimer: the only way back to the game from the pizza website is the back button since it is deployed
+                elsewhere.</p>
+        </div>
     </div>
 </body>
