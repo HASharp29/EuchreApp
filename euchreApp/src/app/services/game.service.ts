@@ -225,7 +225,7 @@ export class GameService {
     if (this.isTrumpSuit(card1, trumpSuit)) {
       return this.isTrumpSuit(card2, trumpSuit);
     }
-    return card1.suit === card2.suit;
+    return card1.suit === card2.suit && !this.isTrumpSuit(card2, trumpSuit);
   }
 
   //given a player, card, and the round, remove card from player hand
