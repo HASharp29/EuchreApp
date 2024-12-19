@@ -13,7 +13,8 @@
   </div>
   }
 
-  @if(game.currentRound.trumpSuit == null) {
+  @if(this.trumpBid === false) {
+  @if(game.currentRound.trumpSuit === null) {
   <div id="overlay">
     <div class="msgbox">
       <p>{{game.currentRound.currentTrick.currentPlayer!.name}}'s turn</p>
@@ -36,6 +37,20 @@
         }
     </div>
   </div>
+  }
+  @if(game.currentRound.currentTrick.currentPlayer === game.currentRound.dealer && game.currentRound.trumpSuit !==
+  null){
+  <div id="overlay">
+    <div class="msgbox">
+      <p>Choose a card to discard: </p>
+      <div class="dealer-cards">
+        @for(card of game.currentRound.hands[this.game.currentRound.dealer.index]; track card.photo) {
+        <img src="photos/deck/{{card.photo}}" (click)="discard(card, game.currentRound.dealer)" class="kitty-card">
+        }
+      </div>
+    </div>
+  </div>
+  }
   }
 
   <div class="game-table">
