@@ -32,10 +32,12 @@
           <button (click)="setTrump(getTcandidates()[1])" class="set-button">{{getTcandidates()[1]}}</button>
           <button (click)="setTrump(getTcandidates()[2])" class="set-button">{{getTcandidates()[2]}}</button>
         </div>
-        <div>or</div>
-        <button (click)="bidTrump(false)" class="set-button">Pass</button>
-        }
+        @if(game.currentRound.passTrumpCount < 7){ <div>or
     </div>
+    <button (click)="bidTrump(false)" class="set-button">Pass</button>
+    }
+    }
+  </div>
   </div>
   }
   @if(game.currentRound.currentTrick.currentPlayer === game.currentRound.dealer && game.currentRound.trumpSuit !==
