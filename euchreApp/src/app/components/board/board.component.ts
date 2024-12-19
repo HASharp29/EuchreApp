@@ -78,7 +78,6 @@ export class BoardComponent {
     const winner = this.gameService.determineTrickWinner(this.game);
     console.log(winner)
     this.gameService.scoreTrick(this.game, winner);
-    alert(winner.name + " is the winner!");
 
     if (this.game.currentRound.trickCounter === 5) {
       this.scoreRound();
@@ -89,11 +88,9 @@ export class BoardComponent {
     const winningTeam = this.gameService.scoreRound(this.game);
     if (winningTeam === 0) {
       this.gameOver = true;
-      alert("Game over. Team 1 wins");
     }
     else if (winningTeam === 1) {
       this.gameOver = true;
-      alert("Game over. Team 2 wins");
     }
   }
 

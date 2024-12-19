@@ -14,19 +14,18 @@ export class StorageService {
   firestore: Firestore = inject(Firestore);
 
   async saveGame(game: Game): Promise<void> {
-    console.log("re;jogh;aerhgeslrhglserhgls;rsez")
     try {
       const gameCollection = collection(this.firestore, 'games');
-
+  
       // Add the game document (basic game details)
       const gameDocRef = await addDoc(gameCollection, {
         roundCounter: game.roundCounter,
         score: game.score,
         timestamp: serverTimestamp(), // Add the timestamp
       });
-
+  
       console.log('Game document created:', gameDocRef.id);
-
+  
       // Save players as a subcollection
       const playersCollection = collection(gameDocRef, 'players');
       for (const player of game.players) {
@@ -35,67 +34,85 @@ export class StorageService {
           index: player.index,
         });
       }
-
+  
       // Save the current round as a subcollection
       const roundsCollection = collection(gameDocRef, 'rounds');
       const roundDocRef = await addDoc(roundsCollection, {
-        kittyCard: game.currentRound.kittyCard,
-        dealer: game.currentRound.dealer,
-        caller: game.currentRound.caller || null,
-        outPlayer: game.currentRound.outPlayer || null,
+        kittyCard: {
+          suit: game.currentRound.kittyCard.suit,
+          rank: game.currentRound.kittyCard.rank,
+          photo: game.currentRound.kittyCard.photo,
+        },
+        dealer: {
+          name: game.currentRound.dealer.name,
+          index: game.currentRound.dealer.index,
+        },
+        caller: game.currentRound.caller
+          ? {
+              name: game.currentRound.caller.name,
+              index: game.currentRound.caller.index,
+            }
+          : null,
+        outPlayer: game.currentRound.outPlayer
+          ? {
+              name: game.currentRound.outPlayer.name,
+              index: game.currentRound.outPlayer.index,
+            }
+          : null,
         trumpSuit: game.currentRound.trumpSuit,
         trickCounter: game.currentRound.trickCounter,
         tricksWon: game.currentRound.tricksWon,
         tricksWonPlayer: [...game.currentRound.tricksWonPlayer],
-        tester: 3
+        passTrumpCount: game.currentRound.passTrumpCount,
+        switchTime: game.currentRound.switchTime,
       });
-
+  
       // Save the current trick as a subcollection
       const tricksCollection = collection(roundDocRef, 'tricks');
       await addDoc(tricksCollection, {
-        leadPlayer: game.currentRound.currentTrick.leadPlayer || null,
+        leadPlayer: {
+              name: game.currentRound.currentTrick.leadPlayer.name,
+              index: game.currentRound.currentTrick.leadPlayer.index,
+            },
         cardLed: game.currentRound.currentTrick.cardLed
           ? {
-            suit: game.currentRound.currentTrick.cardLed.suit,
-            rank: game.currentRound.currentTrick.cardLed.rank,
-            photo: game.currentRound.currentTrick.cardLed.photo,
-          }
+              suit: game.currentRound.currentTrick.cardLed.suit,
+              rank: game.currentRound.currentTrick.cardLed.rank,
+              photo: game.currentRound.currentTrick.cardLed.photo,
+            }
           : null,
         cardsPlayed: game.currentRound.currentTrick.cardsPlayed.map((card) =>
           card
             ? {
-              suit: card.suit,
-              rank: card.rank,
-              photo: card.photo,
-            }
+                suit: card.suit,
+                rank: card.rank,
+                photo: card.photo,
+              }
             : null
         ),
-        currentPlayer: game.currentRound.currentTrick.currentPlayer,
+        currentPlayer: {
+              name: game.currentRound.currentTrick.currentPlayer.name,
+              index: game.currentRound.currentTrick.currentPlayer.index,
+            },
         playedCounter: game.currentRound.currentTrick.playedCounter,
-
-
       });
-
-      // Save each player's hand as a subcollection
+      
+        // Save each player's hand as a document
       const handsCollection = collection(roundDocRef, 'hands');
       for (let playerIndex = 0; playerIndex < game.currentRound.hands.length; playerIndex++) {
         const playerHand = game.currentRound.hands[playerIndex];
-        const handDocRef = doc(handsCollection, playerIndex.toString());
-
-        // Save each card in the player's hand as a subcollection
-        const cardsCollection = collection(handDocRef, 'cards');
-        for (const card of playerHand) {
-          if (card) {
-            const cardRef = doc(cardsCollection);
-            await setDoc(cardRef, {
-              suit: card.suit,
-              rank: card.rank,
-              photo: card.photo,
-            });
-          }
-        }
+        
+        // Store the hand as a document containing a list of cards
+        await setDoc(doc(handsCollection, playerIndex.toString()), {
+          cards: playerHand.map((card) => ({
+            suit: card.suit,
+            rank: card.rank,
+            photo: card.photo,
+          })),
+        });
       }
 
+  
       console.log('Game saved successfully.');
     } catch (error) {
       console.error('Error saving game:', error);
@@ -103,123 +120,143 @@ export class StorageService {
     }
   }
 
-  async getGame(gameId: string): Promise<void>/*Promise<Game | null>*/ {
-    /*try {
+
+  async getGame(gameId: string): Promise<Game | null> {
+    try {
       // Reference the game document
-      const gameDocRef = doc(this.firestore, `games/${gameId}`);
-      const gameDoc = await getDoc(gameDocRef);
-
-      // Check if the game exists
-      if (!gameDoc.exists()) {
-        console.error(`Game with ID ${gameId} does not exist.`);
+      const gameDocRef = doc(this.firestore, 'games', gameId);
+      const gameDocSnap = await getDoc(gameDocRef);
+  
+      if (!gameDocSnap.exists()) {
+        console.error('Game not found');
         return null;
       }
-
-      const gameData = gameDoc.data() as { roundCounter: number; score: [number, number] }; // Type-cast game data
-
-      // Retrieve players subcollection
-      const playersCollection = collection(gameDocRef, 'players');
-      const playersSnapshot = await getDocs(playersCollection);
-      const players: Player[] = playersSnapshot.docs.map((playerDoc) => playerDoc.data() as Player);
-
-      // Retrieve round document (assuming only one round exists)
-      const roundsCollection = collection(gameDocRef, 'rounds');
-      const roundsSnapshot = await getDocs(roundsCollection);
-      const roundDoc = roundsSnapshot.docs[0];
-
-      if (!roundDoc) {
-        console.error('No round found for the game.');
-        return null;
-      }
-
-      const roundData = roundDoc.data() as {
-        kittyCard: Card;
-        dealer: Player;
-        caller: Player | null;
-        outPlayer: Player | null;
-        trumpSuit: Card["suit"] | null;
-        trickCounter: number;
-        tricksWon: [number, number];
-        tricksWonPlayer: [number, number, number, number];
+  
+      // Basic game details
+      const gameData = gameDocSnap.data();
+      const game: Game = {
+        players: [],
+        roundCounter: gameData['roundCounter'],
+        score: gameData['score'],
+        currentRound: {} as Round, // Placeholder for now
       };
-
-      // Retrieve each player's hand from the subcollection
-      const handsCollection = collection(roundDoc.ref, 'hands');
-      const handsSnapshot = await getDocs(handsCollection);
-      const hands: [Card[], Card[], Card[], Card[]] = [[], [], [], []]; // Assuming 4 players
-
-      for (const handDoc of handsSnapshot.docs) {
-        const handData = handDoc.data();
-
-        // Assuming the Firestore document for each player's hand has a 'cards' field with an array of Card objects
-        const playerIndex = parseInt(handDoc.id, 10); // Ensure the document ID corresponds to the player's index
-        if (isNaN(playerIndex) || playerIndex < 0 || playerIndex > 3) {
-          console.warn(`Invalid player index '${handDoc.id}' in hands collection.`);
-          continue;
-        }
-
-        hands[playerIndex] = (handData['cards'] || []).map((card: any) => ({
-          suit: card.suit,
-          rank: card.rank,
-          photo: card.photo,
-        })) as Card[];
-      }
-
-      // Retrieve the single trick document
-      const tricksCollection = collection(roundDoc.ref, 'tricks');
-      const tricksSnapshot = await getDocs(tricksCollection);
-      const trickDoc = tricksSnapshot.docs[0];
-
-      if (!trickDoc) {
-        console.error('No trick found for the round.');
+  
+      // Fetch players subcollection
+      const playersCollection = collection(gameDocRef, 'players');
+      const playersSnap = await getDocs(playersCollection);
+      const players: Player[] = playersSnap.docs.map((docSnap) => {
+        const playerData = docSnap.data();
+        return {
+          name: playerData['name'],
+          index: playerData['index'],
+        };
+      });
+      game.players = players;
+  
+      // Fetch rounds subcollection
+      const roundsCollection = collection(gameDocRef, 'rounds');
+      const roundsSnap = await getDocs(roundsCollection);
+  
+      if (roundsSnap.empty) {
+        console.error('No rounds found');
         return null;
       }
-
-      const trickData = trickDoc.data();
-
-      const cardsPlayed: [Card | null, Card | null, Card | null, Card | null] = trickData['cardsPlayed'].map((card: any, idx: number) =>
-        card ? { suit: card.suit, rank: card.rank, photo: card.photo } : null
-      ) as [Card | null, Card | null, Card | null, Card | null];
-
+  
+      const currentRoundDoc = roundsSnap.docs[roundsSnap.docs.length - 1]; // Assuming the current round is the latest round
+      const roundData = currentRoundDoc.data();
+  
+      // Fetch tricks subcollection
+      const tricksCollection = collection(currentRoundDoc.ref, 'tricks');
+      const tricksSnap = await getDocs(tricksCollection);
+      const trickData = tricksSnap.docs[0].data(); // Assuming only the current trick is stored
+  
+      // Map current trick
       const currentTrick: Trick = {
-        cardsPlayed,
-        leadPlayer: trickData['leadPlayer'],
-        cardLed: trickData['cardLed'] ? { suit: trickData['cardLed'].suit, rank: trickData['cardLed'].rank, photo: trickData['cardLed'].photo } : null,
-        currentPlayer: trickData['currentPlayer'],
+        cardsPlayed: trickData['cardsPlayed'].map((card: any) =>
+          card
+            ? {
+                suit: card['suit'],
+                rank: card['rank'],
+                photo: card['photo'],
+              }
+            : null
+        ),
+        leadPlayer:  {
+              name: trickData['leadPlayer']['name'],
+              index: trickData['leadPlayer']['index'],
+            },
+        cardLed: trickData['cardLed']
+          ? {
+              suit: trickData['cardLed']['suit'],
+              rank: trickData['cardLed']['rank'],
+              photo: trickData['cardLed']['photo'],
+            }
+          : null,
+        currentPlayer: {
+              name: trickData['currentPlayer']['name'],
+              index: trickData['currentPlayer']['index'],
+            },
         playedCounter: trickData['playedCounter'],
       };
-
-      // Build the Round object
-      const currentRound: Round = {
+  
+      // Fetch hands collection
+      const handsCollection = collection(currentRoundDoc.ref, 'hands');
+      const handsSnap = await getDocs(handsCollection);
+  
+      const hands: [Card[], Card[], Card[], Card[]] = [[], [], [], []]; // Assuming 4 players
+      handsSnap.docs.forEach((docSnap) => {
+        const playerIndex = parseInt(docSnap.id, 10);
+        const handData = docSnap.data();
+        hands[playerIndex] = handData['cards'].map((card: any) => ({
+          suit: card['suit'],
+          rank: card['rank'],
+          photo: card['photo'],
+        }));
+      });
+  
+      // Assemble the current round
+      game.currentRound = {
         hands,
-        kittyCard: roundData['kittyCard'],
-        dealer: roundData['dealer'],
-        caller: roundData['caller'],
-        outPlayer: roundData['outPlayer'],
+        kittyCard: {
+          suit: roundData['kittyCard']['suit'],
+          rank: roundData['kittyCard']['rank'],
+          photo: roundData['kittyCard']['photo'],
+        },
+        dealer: {
+          name: roundData['dealer']['name'],
+          index: roundData['dealer']['index'],
+        },
+        caller: roundData['caller']
+          ? {
+              name: roundData['caller']['name'],
+              index: roundData['caller']['index'],
+            }
+          : null,
+        outPlayer: roundData['outPlayer']
+          ? {
+              name: roundData['outPlayer']['name'],
+              index: roundData['outPlayer']['index'],
+            }
+          : null,
         trumpSuit: roundData['trumpSuit'],
         trickCounter: roundData['trickCounter'],
         currentTrick,
         tricksWon: roundData['tricksWon'],
         tricksWonPlayer: roundData['tricksWonPlayer'],
+        passTrumpCount: roundData['passTrumpCount'],
+        switchTime: roundData['switchTime'],
       };
-
-      // Build and return the Game object
-      const game: Game = {
-        players,
-        roundCounter: gameData['roundCounter'],
-        currentRound,
-        score: gameData['score'],
-      };
-
+  
+      console.log('Game loaded successfully.');
+      console.log(game.currentRound.hands[3]);
       return game;
-
     } catch (error) {
-      console.error('Error retrieving game:', error);
-      return null;
-    }*/
+      console.error('Error loading game:', error);
+      throw error;
+    }
   }
 
-
+  
   async getAllGames(): Promise<{ gameId: string, timestamp: any, players: Player[] }[]> {
     try {
       // Reference to the 'games' collection

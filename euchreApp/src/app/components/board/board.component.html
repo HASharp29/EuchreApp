@@ -67,7 +67,7 @@
         <h2>{{ game.players[player.index].name }}</h2>
         <!--<img src="https://media.tenor.com/wQZdn6U1RoQAAAAM/dance-happy.gif" alt="The dancing baby GIF" class="player-image">-->
         <div class="cards">
-          @if(player === this.game.currentRound.currentTrick.currentPlayer) {
+          @if(player.name === this.game.currentRound.currentTrick.currentPlayer.name) {
           @for(card of game.currentRound.hands[player.index]; track card!.photo){
           <img src="photos/deck/{{ card.photo }}" alt="Something went wrong" class="current-player-card"
             (click)="playCard(card)">

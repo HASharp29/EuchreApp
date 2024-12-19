@@ -30,19 +30,17 @@ export class PauseComponent {
     }
 
     
-  }
+  } 
 
   async saveGame() {
     // Save the game to Firestore
     await this.storageService.saveGame(this.game!);
 
-    // Simulate save delay and navigate to the start screen
-    setTimeout(() => {
-      this.router.navigate(['/']);
-    }, 3000);
+    this.router.navigate(['/']);
+    console.log(this.storageService.getGame("dSF49tNCCD1dqDtAhFPI"));
   }
 
-  resumeGame() {
+resumeGame() {
     // Navigate back to the board and pass the game object back as state
     this.router.navigate(['/board'], {
       state: { game: this.game }

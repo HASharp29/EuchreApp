@@ -3,7 +3,8 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { routes } from './app.routes';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideFirestore } from '@angular/fire/firestore';
-import { getFirestore } from 'firebase/firestore'; // Import Firestore from Firebase SDK
+import { getFirestore } from 'firebase/firestore';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'; // Import Firestore from Firebase SDK
 
 const firebaseConfig = {
   apiKey: "AIzaSyDI8i2d4G1OC4Ltrl0cUi6Ehc24iO70u2g",
@@ -21,6 +22,6 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
-    provideFirestore(() => getFirestore()) // Providing Firestore
+    provideFirestore(() => getFirestore()), provideAnimationsAsync() // Providing Firestore
   ]
 };

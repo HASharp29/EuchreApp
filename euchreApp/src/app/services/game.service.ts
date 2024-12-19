@@ -17,9 +17,9 @@ export interface Player {
 // this interface keeps track of the cards played in a trick and who led the trick and with what
 export interface Trick {
   cardsPlayed: [Card | null, Card | null, Card | null, Card | null]; //cards played, index corresponds to player
-  leadPlayer: Player | null; //player who played first card
+  leadPlayer: Player; //player who played first card
   cardLed: Card | null; //card led
-  currentPlayer: Player | null; // null type added for trump bid
+  currentPlayer: Player;
   playedCounter: number;
 }
 
