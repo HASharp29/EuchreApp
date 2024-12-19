@@ -110,7 +110,7 @@ export class GameService {
   getTrump(leadPlayer: Player) {
     const suit: Card['suit'] | null = null; // trumpSuit
     const caller: Player = leadPlayer;  // start asking from leadPlayer
- 
+
     return { caller, suit };
   }
 
@@ -121,7 +121,7 @@ export class GameService {
 
     const leadPlayer = players[(dealer.index + 1) % 4];
 
-    const {caller, suit} = this.getTrump(leadPlayer);
+    const { caller, suit } = this.getTrump(leadPlayer);
 
     const currentTrick = this.createTrick(leadPlayer);
 

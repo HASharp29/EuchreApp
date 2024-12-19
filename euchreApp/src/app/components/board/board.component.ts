@@ -18,6 +18,7 @@ export class BoardComponent {
   activatedRoute = inject(ActivatedRoute);
   game: Game = this.gameService.initializeGame(['', '', '', '']); //game initialized with empty strings (will be reset later)
   gameOver: boolean = false;
+  trumpBid: boolean = false;
   tCandidates: ("hearts" | "diamonds" | "spades" | "clubs" | null)[] = ["hearts", "diamonds", "clubs", "spades"];
 
   constructor(private router: Router) {
@@ -34,13 +35,15 @@ export class BoardComponent {
       this.router.navigate(['/']);
     }
   }
-  
+
   bidTrump(bid: boolean): void {
     if (bid) {
       this.game.currentRound.trumpSuit = this.game.currentRound.kittyCard['suit'];
       this.game.currentRound.caller = this.game.currentRound.currentTrick.currentPlayer;
       this.game.currentRound.currentTrick.currentPlayer = this.game.currentRound.currentTrick.leadPlayer;
+      this.game.currentRound.hands[this.game.currentRound.dealer.index][5] = this.game.currentRound.kittyCard;
       this.game.currentRound.switchTime = true;
+      this.game.currentRound.currentTrick.currentPlayer = this.game.currentRound.dealer;
     } else {
       this.game.currentRound.passTrumpCount++;
       this.game.currentRound.currentTrick.currentPlayer = this.game.players[(this.game.currentRound.currentTrick.currentPlayer!.index + 1) % 4]
@@ -60,6 +63,15 @@ export class BoardComponent {
     this.game.currentRound.caller = this.game.currentRound.currentTrick.currentPlayer;
     this.game.currentRound.currentTrick.currentPlayer = this.game.currentRound.currentTrick.leadPlayer;
     this.game.currentRound.switchTime = true;
+    this.trumpBid = true;
+  }
+
+  discard(card: Card, dealer: Player): void { // ALlows the dealer to discard one card after picking up kitty card
+    this.game.currentRound.hands[dealer.index].splice(this.game.currentRound.hands[dealer.index].indexOf(card), 1);
+    this.trumpBid = true;
+    this.game.currentRound.switchTime = true;
+    this.game.currentRound.currentTrick.currentPlayer = this.game.currentRound.currentTrick.leadPlayer;
+    console.log("Card was successfully removed from player's hand.")
   }
 
   nextPlayer() {
