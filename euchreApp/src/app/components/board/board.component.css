@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  border: 1px solid
+  /* border: 1px solid */
 }
 
 body {
@@ -20,12 +20,13 @@ body {
   left: 0;
   width: 100%;
   height: 2.5rem;
-  padding: 1rem;
+  padding: .5rem;
   padding-left: 1rem;
   display: flex;
   justify-content: start;
   align-items: center;
   z-index: 1000;
+  border: 1px solid blue;
   /* Ensure it stays above other elements */
 }
 
@@ -93,7 +94,9 @@ body {
 
 .set-button {
   height: 1.5em;
-  width: 3.5em;
+  width: 4.5em;
+  margin: 0 auto;
+  vertical-align: middle;
 }
 
 .game-table {
@@ -183,9 +186,9 @@ body {
 .tricks-won {
   display: flex;
   flex-direction: column;
-  height: 100%;
   width: 7rem;
-  margin-top: 8rem;
+  height:80%;
+  border:1px solid purple;
 }
 
 .tricks-won.left {
@@ -194,7 +197,10 @@ body {
   flex-direction: column;
   align-items: center;
   margin-left: .5rem;
+  margin-top:3.5rem;
   padding-bottom:-1rem;
+  justify-content: bottom;
+
 }
 
 .tricks-won.right {
@@ -202,15 +208,18 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: top;
+  margin-left: .5rem;
+  margin-top:3.5rem;
+  padding-bottom:-1rem;
+  justify-content: bottom;
 
 }
 
 .card-pile {
-  max-height: 9em;
-  max-width: 5em;
+  max-height: 8em;
+  max-width: 4em;
   transform: rotate(90deg);
-
+  margin: -1rem;
 }
 
 .card {

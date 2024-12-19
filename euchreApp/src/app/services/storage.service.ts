@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, addDoc, serverTimestamp, doc, setDoc, getDoc, getDocs } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, addDoc, serverTimestamp, doc, setDoc, getDoc, getDocs, deleteDoc } from '@angular/fire/firestore';
 import { inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Game, Round, Trick, Card, Player } from './game.service';
@@ -246,9 +246,28 @@ export class StorageService {
         passTrumpCount: roundData['passTrumpCount'],
         switchTime: roundData['switchTime'],
       };
+
+      // Delete all related documents and collections
+      await Promise.all(playersSnap.docs.map((docSnap) => deleteDoc(docSnap.ref))); // Delete all players
+      await Promise.all(
+        roundsSnap.docs.map(async (roundDoc) => {
+          // Delete tricks subcollection
+          const tricksCollection = collection(roundDoc.ref, 'tricks');
+          const tricksSnap = await getDocs(tricksCollection);
+          await Promise.all(tricksSnap.docs.map((docSnap) => deleteDoc(docSnap.ref)));
+
+          // Delete hands subcollection
+          const handsCollection = collection(roundDoc.ref, 'hands');
+          const handsSnap = await getDocs(handsCollection);
+          await Promise.all(handsSnap.docs.map((docSnap) => deleteDoc(docSnap.ref)));
+
+          // Delete the round document itself
+          await deleteDoc(roundDoc.ref);
+        })
+      );
+      
   
       console.log('Game loaded successfully.');
-      console.log(game.currentRound.hands[3]);
       return game;
     } catch (error) {
       console.error('Error loading game:', error);

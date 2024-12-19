@@ -37,7 +37,6 @@ export class PauseComponent {
     await this.storageService.saveGame(this.game!);
 
     this.router.navigate(['/']);
-    console.log(this.storageService.getGame("dSF49tNCCD1dqDtAhFPI"));
   }
 
 resumeGame() {
