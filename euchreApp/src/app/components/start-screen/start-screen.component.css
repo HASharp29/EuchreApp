@@ -107,7 +107,7 @@ select {
     width: 25rem;
     padding: 10px;
     /* Add padding inside dropdown */
-    border: 2px solid #e5a11e;
+    border: 1px solid black;
     /* Black border */
     border-radius: 5px;
     /* Rounded corners */
